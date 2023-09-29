@@ -1,0 +1,4 @@
+curl 0.0.0.0:5000/users -XPOST -H "Content-Type: application/json" -d '{ "email": "bob@dylan.com", "password": "toto1234!", "username": "bobbydyl"}' ; echo ""
+
+
+curl 0.0.0.0:5000/api/auth/user -v -b 'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MTU3MGNlOTllZmU2MjVmZDhiMzM3YiIsImlhdCI6MTY5NTkxMjA3OSwiZXhwIjoxNjk1OTk4NDc5fQ.NYIlQmUyv5JbTsnE9i5dFpu9fPE0kKIUeJa3r7mQ-6g

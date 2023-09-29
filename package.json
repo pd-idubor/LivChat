@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "./node_modules/.bin/eslint",
     "check-lint": "lint [0-9]*.js",
@@ -14,12 +15,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "bull": "^3.16.0",
     "chai-http": "^4.3.0",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
     "express": "^4.17.1",
+    "gravatar": "^1.8.2",
     "image-thumbnail": "^1.0.10",
     "mime-types": "^2.1.27",
     "mongodb": "^3.5.9",
+    "mongoose": "^5.13.20",
     "redis": "^2.8.0",
     "sha1": "^1.1.1",
     "uuid": "^8.2.0"
@@ -47,7 +53,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.17.0",
-    "express-session": "^1.17.0",
+    "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
     "marked": "^0.8.0",
     "md5": "^2.2.1",
@@ -57,7 +63,7 @@
     "sanitize-html": "^1.20.1",
     "sinon": "^7.5.0",
     "socket.io": "^2.3.0",
-    "validator": "^12.1.0",
+    "validator": "^12.2.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   }
