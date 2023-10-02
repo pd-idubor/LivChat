@@ -31,8 +31,12 @@ const Users = mongoose.model(
         ref: "Posts"
       }
     ],
-    followers: Array,
-    following: Array
+    followers: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }
+    ],
+    following: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Users' }
+    ],
   })
 );
 
