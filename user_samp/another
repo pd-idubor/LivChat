@@ -1,0 +1,1 @@
+curl 0.0.0.0:5000/api/auth/signup -XPOST -H "Content-Type: application/json" -d '{ "email": "osas@osas.com", "password": "osasosas", "username": "osasosas"}' ; echo ""

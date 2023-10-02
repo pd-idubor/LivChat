@@ -7,7 +7,6 @@ import config from '../utils/config.js';
 
 
 //console.log(db);
-//const ROLES = db.ROLES;
 const check = validator;
 const Users = db.users;
 const jwt = jsonwebtoken;
@@ -42,12 +41,13 @@ class UsersController {
     user.password = await bcrypt.hash(password, salt);
 
     console.log("Saving");
-    await user.save((err, user) => {
+    await user.save(); /*((err, user)=> {
       if (err) {
-        return res.status(500).send({ message: err });
+        res.status(500).send({ message: err });
       };
     });
-  //next();
+  */
+    //next();
     console.log("Saved");
     try {
       const token = jwt.sign({ id: user.id }, config.secret,
@@ -55,6 +55,7 @@ class UsersController {
               algorithm: 'HS256',
               expiresIn: 86400,
 	    });
+    req.session.user = user;
     req.session.token = token;
 
     //req.flash('success', `Welcome ${username}`);
@@ -96,9 +97,11 @@ class UsersController {
                           expiresIn: 86400,
                   });
 
-        req.session.token = token;
+        req.session.user = user;
+	req.session.token = token;
 
         //req.flash('success', 'You\'re in');
+	console.log(user);
 	res.status(200).send({
           id: user._id,
           username: user.username,
@@ -112,6 +115,13 @@ class UsersController {
  };
 
   static signOut (req, res) {
+    /*req.session.destroy((err) => {
+      if (err) {
+      console.log(err);
+      } else {
+        res.redirect('/login');
+      }
+    });*/
     try {
       req.session = null;
       return res.status(200).send({ message: "You've been signed out!"});
@@ -120,7 +130,9 @@ class UsersController {
     } catch (err) {
       this.next(err);
     }
-  };
+    req.flash('success', 'You\'ve logged out!');
+    res.redirect('/');
+  }
   
   static async getContent (req, res) {
     try {

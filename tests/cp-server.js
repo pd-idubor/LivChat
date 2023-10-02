@@ -1,15 +1,23 @@
+//const express = require('express');
+//const session = require('express-session');
+const flash = require('connect-flash');
 // require('dotenv').config()
+//const cors = require("cors");
+//const cookieSession = require("cookie-session");
 import router from './routes/index.js';
 import cookieSession from 'cookie-session'
 import cookieParser from 'cookie-parser';
-//import session from 'express-session';
-import flash from 'connect-flash';
-import cors from "cors";
-import dbClient from './utils/db.js';
+import session from 'express-session';
+/* const { createServer } = require('node:http');
+const { join } = require('node:path');
+const { Server } = require('socket.io');
+*/
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-
+import flash from 'connect-flash';
+import cors from "cors";
+import dbClient from './utils/db.js';
 
 //const { Server } = pkg;
 
@@ -19,16 +27,9 @@ let corsOptions = {
 
 
 const app = express();
-const server = createServer(app);
-const io = new Server(server);
-
 const port = process.env.PORT || 5000;
-
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-
-// Static files
-app.use(express.static("public"));
 
 //app.use(express.static("public"));
 
@@ -81,11 +82,11 @@ app.use('/', router);
 
 dbClient;
 
+const server = createServer(app);
+const io = require('socket.io')(server);
+
 io.on('connection', (socket) => {
   console.log('a user connected');
-  socket.on('disconnect', function() {
-    console.log('Client disconnected.');
-    });
 });
 
 server.listen(port, () => {
@@ -95,4 +96,4 @@ server.listen(port, () => {
 //dbClient;
 
 
-export default server;
+export default app;

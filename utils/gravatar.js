@@ -27,6 +27,6 @@ const Gravatar = (req, res, next) => {
     }
   next();
   }
-})
-
+);
+}
 export default Gravatar;
