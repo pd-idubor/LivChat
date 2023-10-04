@@ -15,7 +15,7 @@ io.on("connection", function (socket) {
 
   socket.on("disconnect", () => {
     activeUsers.delete(socket.userId);
-    io.emit("user disconnected", socket.userId);
+    io.emit("user is inactive", socket.userId);
   });
 
 //Broadcast user message

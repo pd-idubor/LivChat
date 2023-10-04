@@ -1,27 +1,17 @@
-
-/* Load the packages for hashing and HTTP requests (must be installed with npm before) */
 import crypto from "crypto";
 import request from "request";
 
 
 const Gravatar = (req, res, next) => {
 
-  /* Generate a md5-hash of a email address and return its hexadecimal value */
   let hash = crypto.createHash('md5').update(user.email).digest("hex");
 
-  /* Sends a GET request for the user profile */
-/* request("https://www.gravatar.com/"+hash+".xml",function(err,response,body){
-    if (!err){
-      console.log(body);
-    }else{
-      console.log("Profile Error: "+err);
-    }
-  })
-*/
   /* Sends a GET request for the avatar */
-  request("https://www.gravatar.com/avatar/"+hash+".jpg",function(err,response,body){
+  request("https://www.gravatar.com/avatar/"+hash+".jpg",function(err,res, data){
     if (!err){
-      console.log("Got image: "+body);
+      req.userImg = body; 
+      console.log("Reaponse: ", res);
+      console.log("Got image: ", data);
     }else{
       console.log("Image Error: "+err);
     }
@@ -29,4 +19,5 @@ const Gravatar = (req, res, next) => {
   }
 );
 }
+
 export default Gravatar;

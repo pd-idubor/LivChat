@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<%- include('../partials/head'); %>
+	</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    
+  <div class="container-fluid">
+        <a href="#" class="navbar-brand">LivChat</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="true">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link active"><i class="fas fa-house-chimney-window"></i> Home</a>
+            
+                <a href="#" class="nav-item nav-link"><i class="fas fa-envelope mx-1"></i> Contact</a>
+            </div>
+          <div class="navbar-nav ms-auto"> 
+              <form class="d-flex">
+                    <input class="form-control me-2" type="text" placeholder="Username" />
+                    <input class="form-control me-2" type="password" placeholder="Password" />
+                    <button class="btn btn-primary" type="submit">Login</button>
+                </form>
+	</div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="p-5 my-4">
+    <div class="row border rounded-3">
+    <div class="col-md-7 p-5 my- bg-light rounded-3">
+        <h1>Staying Connected</h1>
+      <p class="lead">In today's world the internet is a fast, sure and essential way of connecting with the people. With Livchat you can connect with family, friends or develop new relationships. You can share your thoughts at any time, view posts shared by others and give your thoughts on it and many more...
+        <p> Get connected today!</p>
+        </p>         
+        </div>
+  <div class="col-md-5 my-4">
+    <form class="py-3" action="submit" method="POST">
+    <div class="mb-3">
+      <label class="form-label" for="inputUsername">Username</label>
+        <input type="username" class="form-control" id="inputUsername" placeholder="adam1000">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="inputEmail">Email</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="you@example.com">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="inputPassword">Password</label>
+        <input type="password" class="form-control" id="inputPassword" placeholder="password">
+    </div>
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="checkRemember">
+            <label class="form-check-label" for="checkRemember">Remember me</label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Sign Up</button>
+</form>
+    </div>
+  </div>
+  </div>
+  <hr> 
+
+<footer>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &copy; 2023 LivChat</p>
+            </div>           
+        </div>
+    </footer>
+  </div>
+</body>	
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+</script>
+</body>
+</html> 
+

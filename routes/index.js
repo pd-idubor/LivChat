@@ -2,16 +2,16 @@ import express from 'express';
 import verifySign from '../utils/verify.js';
 import verifyToken from '../utils/auth.js';
 import UsersController from '../controllers/usersController.js';
-//import AuthController from '../controllers/AuthController';
 import PostsController from '../controllers/postsController.js';
 import FollowsController from '../controllers/followsController.js';
+import Users from '../models/users.js';
 
 
 const router = express.Router();
 
-// ------------Landing page-----------
+
 router.get('/', function(req, res) {
-  res.render('pages/land_page');
+  res.render('pages/index');
 });
 
 
@@ -24,13 +24,29 @@ router.get('/sock', (req, res) => {
   res.sendFile(new URL('../index.html', import.meta.url).pathname);
 });
 
+router.get('/dashboard/:username', [verifyToken, UsersController.getUser], (req, res) => {
+  const user = req.user;
+  res.render('pages/dashboard', {
+        user : user
+    });
+});
+
+router.get('/profile/:username', [verifyToken, UsersController.getUser], (req, res) => {
+  const user = req.user;
+  console.log(user);
+  res.render('pages/profile', {
+    following: user.following.length,
+    followers: user.followers.length,
+    posts: user.posts.length
+  })
+});                                                        
 
 router.get('/flash', function(req, res) {
   req.flash('info', 'Flash is working');
   res.redirect('/');
 }
 );
-router.get('/api/auth/user/', [verifyToken], UsersController.getContent);
+router.get('/api/auth/user/', [verifyToken], UsersController.getUser);
 
 router.post('/api/auth/check', function(req, res) {
   res.json(req.session);
@@ -39,11 +55,15 @@ router.post('/api/auth/check', function(req, res) {
 
 
 // ----------------User routes----------------
-router.post('/api/auth/signup', [UsersController.checkCred, verifySign], UsersController.signUp);
+router.post('/signup', [UsersController.checkCred, verifySign, UsersController.signUp], function(req, res) {
+  res.redirect('pages/dashboard');
+});
 
-router.post('/api/auth/signin', [UsersController.checkCred], UsersController.signIn);
+router.post('/signin', [UsersController.checkCred], UsersController.signIn, function(req, res) {
+  res.redirect('pages/dashboard')
+});
 
-router.get('/api/auth/signout', UsersController.signOut);
+router.get('/signout', UsersController.signOut);
 
 
 // --------------Posts routes-------------------
@@ -53,14 +73,15 @@ router.get('/posts/count', [verifyToken], PostsController.postCount);
 
 router.post('/posts/update/:id', [verifyToken], PostsController.updatePost);
 router.get('/posts/delete/:id', [verifyToken], PostsController.deletePost);
-router.get('/posts', [verifyToken], PostsController.getPosts);
+router.get('/posts/:username', [verifyToken], PostsController.getPosts);
 
 
 // -------------Follow routes-------------------
-router.post('/follow', [verifyToken], FollowsController.followAction);
+router.post('/follow/:username', [verifyToken], FollowsController.followAction);
 router.get('/follow/count', [verifyToken], FollowsController.countFollowers);
 router.get('/following/count', [verifyToken], FollowsController.countFollowing);
-router.get('/dashboard', [verifyToken], FollowsController.dashContent);
+
+//router.get('/dashboard', [verifyToken], FollowsController.dashUser);
 
 
 export default router;

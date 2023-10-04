@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-//import Gravatar from '../utils/gravatar.js';
 
-
-//const Img = Gravatar;
 
 const Users = mongoose.model(
   "Users",
@@ -23,8 +20,10 @@ const Users = mongoose.model(
       type: Date,
       default: Date.now()
     },
-	 //about: String,
-    //image: { type: String, default: Img },
+    about: {
+      type: String,
+      default: 'This displays user info'
+    },
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,

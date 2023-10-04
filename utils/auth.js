@@ -4,16 +4,14 @@ import config from './config.js';
 
 
 const verifyToken = async (req, res, next) => {
-  //console.log(req);
   console.log(req.headers.cookie);
   if (req.headers.cookie) req.session.token = req.headers.cookie.split('=')[1];
   console.log(req.session);
   let token = req.session.token;
-  //console.log(token);
 
   console.log("________________");
   console.log(req.session);
-  if (req.session.user) {
+  if (req.session.token) {
     console.log("Good");
   } else {
     console.log("No user in session");
@@ -33,7 +31,7 @@ const verifyToken = async (req, res, next) => {
                 });
               }
               req.userId = decoded.id;
-              next();
+	      next();
             });
 };
 

@@ -6,7 +6,6 @@ import verifySign from '../utils/verify.js';
 import config from '../utils/config.js';
 
 
-//console.log(db);
 const check = validator;
 const Users = db.users;
 const jwt = jsonwebtoken;
@@ -27,8 +26,7 @@ class UsersController {
     next();
   }
 
-  static async signUp (req, res) {
-  //Save user
+  static async signUp (req, res, next) {
     console.log("Creating new user");
     const { username, email, password } = req.body;
     const user = await new Users({
@@ -47,7 +45,6 @@ class UsersController {
       };
     });
   */
-    //next();
     console.log("Saved");
     try {
       const token = jwt.sign({ id: user.id }, config.secret,
@@ -59,20 +56,20 @@ class UsersController {
     req.session.token = token;
 
     //req.flash('success', `Welcome ${username}`);
-    // Redirect with- res.redirect('/users'); to dashboard
     res.status(200).send({
       id: user._id,
       username: user.username,
       email: user.email,
       token: token,
     })
+    next();
     } catch(err) {
+	res.json(err);
 	console.log(err);
     }
-    //return res.render('pages/profile');
   }
 
-  static async signIn (req, res) {
+  static async signIn (req, res, next) {
     await Users.findOne({
       username: req.body.username,
     })
@@ -82,7 +79,7 @@ class UsersController {
         }
 
         if (!user) {
-          return res.status(404).send({ message: "User Not found." });
+          return res.status(404).json({ message: "User Not found." });
         }
 
         const hash = bcrypt.compare(req.body.password, user.password);
@@ -108,13 +105,15 @@ class UsersController {
           email: user.email,
           token: req.session.token,
         });
+	next();
 	} catch (err) {
-    	  console.log(err);
+    	  res.json(err);
+	  console.log(err);
 	}
       });
  };
 
-  static signOut (req, res) {
+  static signOut (req, res, next) {
     /*req.session.destroy((err) => {
       if (err) {
       console.log(err);
@@ -124,28 +123,25 @@ class UsersController {
     });*/
     try {
       req.session = null;
-      return res.status(200).send({ message: "You've been signed out!"});
+      res.status(200).send({ message: "You've been signed out!"});
+      next();
       // req.flash('success', 'You logged out!');
-      //res.redirect('/');
     } catch (err) {
-      this.next(err);
+      res.json(err);
     }
     req.flash('success', 'You\'ve logged out!');
-    res.redirect('/');
+    next();
   }
   
-  static async getContent (req, res) {
+  static async getUser (req, res, next) {
     try {
-    // request.user is getting fetched from Middleware after token authentication
       const user = await Users.findById(req.userId);
       if (!user) console.log('No user');
-      console.log(Users);
-      console.log(user);
-      res.json(user);
-      req.flash('success', 'Content gotten');
+      req.user = user;
+      next();
     } catch (e) {
       console.log(e);
-      return res.send("Error in retrieving user");
+      return res.json("Error in retrieving user");
     }
   }
 }

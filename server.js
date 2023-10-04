@@ -11,10 +11,9 @@ import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 
 
-//const { Server } = pkg;
 
 let corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8080"
 };
 
 
@@ -39,7 +38,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(
   cookieSession({
     name: "livchat-session",
-    keys: ["COOKIE_SECRET"], // should use as secret environment variable
+    keys: ["COOKIE_SECRET"],
     httpOnly: true
   })
 );
@@ -57,7 +56,6 @@ app.use(cookieParser());
 
 //app.enable('trust proxy');
 app.use(cors(corsOptions));
-// Use this middelware parser for forms?
 app.use(express.json());
 
 //Falsh messaging
@@ -68,7 +66,7 @@ app.use((req, res, next) =>{
 	
 });
 */
-//ath
+
 app.use(function(req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
@@ -92,7 +90,5 @@ server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
  
-//dbClient;
-
 
 export default server;

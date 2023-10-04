@@ -1,3 +1,4 @@
+import response from '../controller/searchController';
 
 try {
  const response = await fetch(url, options);
@@ -10,15 +11,16 @@ try {
 
 const searchBar = document.getElementById("search-bar");
 const resultsContainer = document.getElementById("results-container");
-const postUnavailableTxt = document.getElementById("post-unavailable-txt");
+const unavailTxt = document.getElementById("post-unavailable-txt");
 let postList;
 let searchValue;
-let postsReturnedOnSearch;
+let postsSearchRes;
 
 // Function to fetch posts from the API
 const fetchPosts = async () => {
  try {
    const response = await Posts.find();
+	 //Call api instead with max number of code allowed or use mongo's;
    postList = await response.json();
 
    // Storing the Post Data in browser storage
@@ -28,35 +30,35 @@ const fetchPosts = async () => {
    // Render the posts on the page
    renderPosts(postList);
  } catch (error) {
-   postUnavailableTxt.innerHTML =
+   unavailTxt.innerHTML =
      "An error occurred while fetching posts. <br /> Please try again later.";
-   postUnavailableTxt.style.display = "block";
+   unavailTxt.style.display = "block";
    console.error(error);
  }
 };
 
-// Function to render posts on the page
+// Render posts on the page
 const renderPosts = (posts) => {
- resultsContainer.innerHTML = ""; // Clear the existing posts
- postUnavailableTxt.style.display = "none"; // Hide the "No posts found" message
- postsReturnedOnSearch = []; // Clear the posts returned on search array
+ resultsContainer.innerHTML = "";
+ unavailTxt.style.display = "none";
+ postsSearchRes = [];
 
  posts.forEach((post) => {
    resultsContainer.innerHTML += `
      <div class="post-cards">
-       <img src="${post.image}" alt="post image" class="post-image" />
        <h2 class="title">${post.title}</h2>
-       <p class="plot">${post.description}</p>
-       <p class="date">${post.year}</p>
+       <p class="content">${post.content}</p>
+       <p class="author">${post.author}</p>
+       <p class="date">${post.createdAt}</p>
      </div>
    `;
 
-   postsReturnedOnSearch.push(post); // Add the posts that are a result to the search input value
+   postsSearchRes.push(post);
  });
 };
 
 const cacheTimestamp = localStorage.getItem("cacheTimestamp");
-const expirationDuration = 21600000; // 6 hours in milliseconds
+const expirationDuration = 3600000; // 1 hours in milliseconds
 
 // Check if cache has expired or data is not available
 if (
@@ -71,20 +73,17 @@ if (
  renderPosts(postList);
 }
 
-// Event listener and handler for search bar input
 searchBar.addEventListener("input", (event) => {
  searchValue = event.target.value.trim().toLowerCase();
 
- // Filter posts based on search input
  const filteredPosts = postList.filter((post) =>
    post.title.toLowerCase().includes(searchValue),
  );
 
- // Render the filtered posts on the page
  renderPosts(filteredPosts);
 
- if (postsReturnedOnSearch.length <= 0) {
-   postUnavailableTxt.style.display = "block"; // Show the "No posts found" message if no posts match the search
+ if (postsSearchRes.length <= 0) {
+  unavailTxt.style.display = "block";
  }
 });
 

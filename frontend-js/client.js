@@ -18,13 +18,13 @@ const inboxPeople = document.querySelector(".inbox__people");//Change to  chat i
 let userName = "";
 
 //Having conected ...
-const newUserConnected = (user) => {
-  userName = user || `User${Math.floor(Math.random() * 1000000)}`;
+const userConnected = (user) => {
+  userName = user;
   socket.emit(userName, "is active");
-  addToUsersBox(userName);
+  addUser(userName);
 };
 
-const addToUsersBox = (userName) => {
+const addUser = (userName) => {
   if (!!document.querySelector(`.${userName}-userlist`)) {
     return;
   }
@@ -44,12 +44,12 @@ const userBox = `
   inboxPeople.innerHTML += userBox;
 };
 
-newUserConnected();
+userConnected();
 
 //User functionalities
 
 socket.on("new user", function (data) {
-  data.map((user) => addToUsersBox(user));
+  data.map((user) => addUser(user));
 });
 
 socket.on("user disconnected", function (userName) {
@@ -66,7 +66,7 @@ const addNewMessage = ({ user, message }) => {
   const time = new Date();
   const formattedTime = time.toLocaleString("en-US", { hour: "numeric", minute: "numeric" });
 
-  const receivedMsg = `
+  const receivedMsgs = `
   <div class="incoming__message">
     <div class="received__message">
       <p>${message}</p>
@@ -77,7 +77,7 @@ const addNewMessage = ({ user, message }) => {
     </div>
   </div>`;
 
-  const myMsg = `
+  const sentMsgs = `
   <div class="outgoing__message">
     <div class="sent__message">
       <p>${message}</p>
@@ -87,7 +87,7 @@ const addNewMessage = ({ user, message }) => {
     </div>
   </div>`;
 
-  messageBox.innerHTML += user === userName ? myMsg : receivedMsg;
+  messageBox.innerHTML += user === userName ? sentMsgs : receivedMsgs;
 };
   messageForm.addEventListener("submit", (e) => {
   e.preventDefault();

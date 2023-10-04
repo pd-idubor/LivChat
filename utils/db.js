@@ -1,9 +1,8 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-//import db from "../models/index.js";
+
 
 dotenv.config();
-
 
 class DBClient {
   constructor() {

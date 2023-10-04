@@ -1,5 +1,6 @@
 import db from '../models/index.js';
 
+
 const Users = db.users;
 const Posts = db.posts;
 
@@ -25,6 +26,7 @@ class PostsController {
                         res.json({ created: true, postid: post._id });
                         });
 	  });
+	next();
 	} catch(err) {
             res.json(err);
         }
@@ -52,7 +54,9 @@ class PostsController {
 	      });
 		      console.log("Post updated");
 	    
+      next();
       } catch (err) {
+	  res.json(err);
 	  console.log(err);
       }
     }
@@ -71,8 +75,9 @@ class PostsController {
     res.json(data);   
 });
 	     //res.json('Post deleted');
+    next();
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).json(error);
     }
     }
   }

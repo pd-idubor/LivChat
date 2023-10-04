@@ -1,16 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">                                                              <head>
+                <%- include('../partials/head'); %>
+        </head>
+        <body>
+
+        <header>                                                                      <%- include('../partials/header'); %>                         </header>
+<body>
 <div class="container-fluid">
     <div class="p-5 my-4 bg-light rounded-3">
-        <h1>Hello name, your feed is empty.</h1>
+        <h1>Welcome <%= user.username %>, your feed is empty.</h1>
         <p class="lead">Your feed displays the latest posts from the people you follow. If you are not following any user yet, you can use the 'Search' feature at the top menu bar to find content written by other users with similar interests and follow them. </p>
-      <div class="row">
+      <div class="row" id="search-container">
         <div class="col-6">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" id="search-bar" placeholder="Search...">
             <button type="button" class="btn btn-secondary">
               <i class="bi-search"></i>
             </button>
         </div>
     </div>
 </div>
-    </div>
+    <div id='results-container'></div>
+      <p id="unavailTxt"></p>
+</div>
    <hr>
+<footer>
+  <%- include('../partials/footer'); %>                               </footer>                                                             
+<script src="/socket.io/socket.io.js"></script>                       <script>                                                                const socket = io();                                                </script>
+</body>                                                               </html>
