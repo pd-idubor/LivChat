@@ -14,16 +14,9 @@
             			loading="lazy"
           			/>
         		</a>
-			<h4 class="me-3">Icon <%= user.username %></h4>
-			<!--< if(user && user._id != currentUser._id) { %>
-                       < const following = user.following;
-                          const action = following.includes(currentUser._id) ? 'unfollow' : 'follow';
-                       %>
-                        <button class="btn btn-primary ml-4" data-action="<= action %>" data-follower="<= user._id %>" data-following="<= currentUser._id %>" id="follow-btn">Follow</button>
-                       <} %>
-			<button type="button" class="active btn btn-success text-white" id="follow">Follow <i id="fol-icon" class="fas fa-user-check"></i><i id="unfol-icon" class="fas fa-user-large-slash d-none"></i>
+			<h4 class="me-3">Icon <%= username %></h4>
+			<button type="button" class="active btn btn-success text-white" id="follow-btn">Follow <i id="fol-icon" class="fas fa-user-check"></i><i id="unfol-icon" class="fas fa-user-large-slash d-none"></i>
 			</button>
-		-->
 		</div>
 		<nav>
 		<!-- Nav tabs -->
@@ -54,7 +47,7 @@
 			  posts.forEach(post => {
 			%>
 			  <p class="border">
-			    <a href='/posts/:id %>'><%= post.title %></a> created at <%= post.createdAt..toLocaleString("en-US", { hour: "numeric", minute: "numeric" })%>
+			    <a href='/posts/:id %>'><%= post.title %></a> created at <%= post.createdAt %>
 			  </p>
 			<% });
 			} %>

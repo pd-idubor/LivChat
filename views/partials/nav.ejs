@@ -1,3 +1,4 @@
+<%- include("../partials/header.ejs"); %>
 <header>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 	<div class="container-fluid">
@@ -12,20 +13,23 @@
 				</a>
 			</div>
 			<div class="navbar-nav ms-auto">
-				<form class="d-flex">
-					<div class="input-group">
-						<input id="searchBar" type="text" class="form-control d-non" placeholder="Search">
-						<button type="button" class="btn btn-dark">
-							<a><i class="fas fa-magnifying-glass"></i></a>
-						</button>
+				<!-- Search panel -->
+				<div class="dropdown">
+				<button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"><i class="fas fa-magnifying-glass"></i></button>
+				<div id="search-container" class="dropdown-menu">
+					<input class="dropdown-item" type="search" id="search-bar" placeholder="Search posts..." />
+					<div class="dropdown-item" id="results-container">
 					</div>
-				</form>
+					<p class="dropdown-item d-none"  id="unavailMsg"></p>
+				</div>
+				</div>
+	
 				<ul class="navbar-nav d-flex flex-row me-2">
 					<li class="nav-item me-3 me-lg-0">
-						<a class="nav-link text-white me-1" id="chat" href="#"><i class="far fa-comments"></i></a>
+						<a class="nav-link text-white me-1" id="chat" href="/chat/user.username"><i class="far fa-comments"></i></a>
 					</li>
 					<li class="nav-item me-3 me-lg-0">
-						<a class="nav-link text-white" id="profile" href="#"><i class="fas fa-user mx-1"></i></a>
+						<a class="nav-link text-white" id="profile" href="/profile/user.user._id"><i class="fas fa-user mx-1"></i></a>
 					</li>
 				</ul>
 				<div class="d-flex align-items-center">

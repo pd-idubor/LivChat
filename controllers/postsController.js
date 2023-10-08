@@ -13,7 +13,8 @@ class PostsController {
         try {
           const { title, content } = req.body;
           const post = await new Posts({
-      	    title,
+	    user: req.session.user.username,
+	    title,
             content,
 	    createdAt: new Date()
 	  });
@@ -97,21 +98,24 @@ class PostsController {
   static async getPosts (req, res, next) {
     console.log("All your posts");
     const user = await Users.findById(req.userId).populate('posts');
-    if (!user) return res.json("Use not found for all posts");
+    if (!user) return res.json("User not found for all posts");
     try {
-      const test1 = await Users.findById(req.userId).populate('posts');
-      const test2 = user['posts'];
-      console.log('Test 1:', test1, 'Test2:', test2);
-      console.log("+++++++--------------");
-      const another = await Users.find();
-      const userid = req.userId;
-      const anotherone = await Users.find({_id : userid}, {_id: 0, 'posts': 1}).sort({'createdAt': 1});
-      console.log('Another', another);
-      console.log('Another2', anotherone);
+      let posts = user['posts'];
+      posts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      req.posts = posts;
+      console.log(req.posts);
+      next();
     } catch (err) {
       console.log(err);
     }
   }
+
+  static async getPost (id) {
+    const post = await Posts.findById(id);
+    if (!post) return("Not found");
+    return post;
+  }
+
 }
 
 export default PostsController;

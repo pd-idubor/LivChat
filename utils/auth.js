@@ -30,7 +30,7 @@ const verifyToken = async (req, res, next) => {
                   message: "Unauthorized!",
                 });
               }
-              req.userId = decoded.id;
+	      req.userId = decoded.id;
 	      next();
             });
 };

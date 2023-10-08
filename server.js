@@ -29,9 +29,6 @@ app.set('view engine', 'ejs');
 // Static files
 app.use(express.static("public"));
 
-//app.use(express.static("public"));
-
-// Make sure you place body-parser before your CRUD handlers!
 app.use(express.urlencoded({ extended: true }))
 
 //cookieSession

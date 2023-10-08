@@ -2,6 +2,7 @@ import db from '../models/index.js';
 
 
 const Users = db.users;
+const Posts = db.posts;
 //Replace follower with moi ou current user and following with ami
 
 class FollowsController {
@@ -38,31 +39,32 @@ class FollowsController {
     }
   }
 
-  static async dashContent (req, res, next) {
+  static async dashContent (id) {
     console.log("Get following content");
     try {
-      const user = await Users.findById(req.userId);
-      if (!user) return res.json("No user found");
-      const id = user._id;
-      console.log(id);
-      const cursor = await Users.findById(id).populate('following');
-      console.log(cursor);
-      const fol = user['following'];
-      console.log(fol);
-      const posts = fol.forEach(myFunction);
-      function myFunction(follow_id, index, arr) {
-	      //Users.findById(follow_id).populate('posts').limit(5);
-	      arr[index] = follow_id;
-	      if (follow_id) {
-		console.log('Glow', follow_id['posts']);
-	      }
+      const user = await Users.findById(id);
+      const follows = user['following'];
+      if (follows === undefined || follows.length == 0) return;
+	    
+      let followsList = [];
+      let postsList = [];
+      await follows.reduce(async (promise, follow) => {
+        await promise;
+	if (follow !== null) {
+	  const data = await Posts.find({ 'user': follow.username });
+            for(let i = 0; i < data.length; i++) {
+	      postsList.push(data[i]);
+	    }
+	}
+       }, Promise.resolve());
+      postsList = postsList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const result = postsList.slice(0, 10);
+      console.log('Controller', result);
+      return (result); 
+    } catch (err) {
+          console.log(err);
       }
-      console.log(posts);
-	      //;   
-    } catch (e) {
-      console.log(e);
-    } 
-}
+  }
 
   static async countFollowers (req, res, next) {
     try {
@@ -83,6 +85,65 @@ class FollowsController {
 	console.log(err);
     }
    }
+   
+  static async getFollowing (id) {
+     try {
+       const user = await Users.findById(id).populate('posts');
+       const follows = user['following'];
+       
+       if (follows === undefined || follows.length == 0) return;
+	   
+       let followsList = [];
+       await follows.reduce(async (promise, follow) => {
+	       await promise;
+	       if (follow !== null) {
+		  const data = await Users.findById(follow._id);
+		  followsList.push(data);}
+       }, Promise.resolve());
+      return (followsList);
+       } catch (err) {
+	  console.log(err);
+       }
+  }
+   static async getFollowers (id) {
+     try {
+       const user = await Users.findById(id).populate('posts');
+       
+       const follows = user['followers'];
+       if (follows === undefined || follows.length == 0) return;
+
+       let followsList = [];
+       await follows.reduce(async (promise, follow) => {
+	       await promise;
+	       if (follow !== null) {
+	       const data = await Users.findById(follow._id);
+	       followsList.push(data);}
+       }, Promise.resolve());
+	    
+       return (followsList);
+	     
+     } catch (err) {
+       console.log(err);
+     }
+   }
+  
+  static async getFolProfile(name) {
+    try {
+      const user = await Users.find({'username': name}).populate('posts');
+      const posts = user['posts'];
+      let postList = [];
+      console.log('Fol-user name:', user);
+      await posts.reduce(async (promise, post) => {
+	      await promise;
+	      if (follow !== null) {
+		 const data = await Posts.findById(post._id);
+		 postList.push(data);}
+      }, Promise.resolve());
+      console.log(user, postList);
+    } catch (err) {
+	    console.log(err);
+    }
+  }
 
 }
 export default FollowsController;

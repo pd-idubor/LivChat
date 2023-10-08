@@ -3,17 +3,8 @@ import { io } from "socket.io-client";
 
 const socket = io();
 
-///Test
-/*socket.on('connect', function () {
-  socket.emit('echo', {msg: 'Hello universe!'}, function (response) {
-    console.log(response.msg);
-    socket.disconnect();  // otherwise the node process keeps on running.
-  });
-});
-*/
-//Actual
 
-const inboxPeople = document.querySelector(".inbox__people");//Change to  chat icon click event;
+const activePeople = document.querySelector("#active_users");
 
 let userName = "";
 
@@ -33,7 +24,7 @@ const addUser = (userName) => {
       <h5>${userName}</h5>
     </div>
   `;
-  inboxPeople.innerHTML += userBox;
+  activePeople.innerHTML += userBox;
 };
 
 const userBox = `
@@ -41,7 +32,7 @@ const userBox = `
       <h5>${userName}</h5>
     </div>
   `;
-  inboxPeople.innerHTML += userBox;
+  activePeople.innerHTML += userBox;
 };
 
 userConnected();
@@ -60,7 +51,7 @@ socket.on("user disconnected", function (userName) {
 //
 const inputField = document.querySelector(".message_form__input");
 const messageForm = document.querySelector(".message_form");
-const messageBox = document.querySelector(".messages__history");
+const messageBox = document.querySelector("#chat_messages");
 
 const addNewMessage = ({ user, message }) => {
   const time = new Date();

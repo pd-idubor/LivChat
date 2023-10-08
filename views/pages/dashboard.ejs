@@ -1,15 +1,28 @@
-<%- include("partials/header"); -%>
+<%- include("../partials/header.ejs"); -%>
 
-<%- include("partials/nav"); -%>
+<%- include("../partials/nav.ejs"); -%>
 
 <div class="container-fluid">
 	<div class="p-5 my-4 bg-light rounded-3 text-center">
-        	<h1>Welcome <%= user.username %>, your feed is empty.</h1>
+        <% if (user.following === 0) { %>
+		<h1>Welcome <%= user.username %>, your feed is empty.</h1>
         	<p id="default" class="lead">Your feed displays the latest posts from the people you follow. Search for interesting posts with the search feature and follow other users with similar interests.</p>
-        </div>
-    	<div id="results-container"></div>
-      	<p id="unavailTxt"></p>
-</div>
+	<% } %>
+	<% if (user.following !== 0) { %>
+		<div class="py-3" id="follows-posts">
+		<% if (posts.length === 0) {%>
+			<p>Your friends have not posted recently</p>
+		<% } %>
+		<% if(posts.length > 0) {
+		  posts.forEach(post => {%>
+		    <p class="border">
+			<a href='/post/<%= post._id %>'><%= post.title %></a> created at <%= post.createdAt %>
+		    </p>
+		  <% });
+		} %>
+		</div>
+	<% } %>
+	</div>
 
 
-<%- include("partials/footer"); -%>
+<%- include("../partials/footer.ejs"); -%>

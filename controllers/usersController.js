@@ -135,7 +135,7 @@ class UsersController {
   
   static async getUser (req, res, next) {
     try {
-      const user = await Users.findById(req.userId);
+      const user = await Users.findById(req.userId).populate('posts', 'followers');
       if (!user) console.log('No user');
       req.user = user;
       next();
