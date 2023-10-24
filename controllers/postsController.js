@@ -24,12 +24,13 @@ class PostsController {
 			{ $push: { posts: post._id } },
 			{ new: true, useFindAndModify: false })
 			.then(result => {
-                        res.json({ created: true, postid: post._id });
+                        req.newPost = post._id;
+			console.log({ created: true, postid: post._id });
                         });
 	  });
 	next();
 	} catch(err) {
-            res.json(err);
+            console.log(err);
         }
     } else {
         console.log("No user in req.session");
@@ -51,13 +52,13 @@ class PostsController {
              { _id: req.session.user._id,
 	     "posts._id": req.params.id },
 	      { $set: { "posts.$.title": title, "posts.$.content": content }
-	      }, (err, data) => {(res.json({ updated: true, postdata: data}))
+	      }, (err, data) => {(console.log({ updated: true, postdata: data}))
 	      });
 		      console.log("Post updated");
 	    
       next();
       } catch (err) {
-	  res.json(err);
+	  //res.json(err);
 	  console.log(err);
       }
     }
@@ -81,18 +82,6 @@ class PostsController {
       res.status(500).json(error);
     }
     }
-  }
-
-  static async postCount (req, res, next) {
-    console.log("Post count");
-    const user = await Users.findById(req.userId);
-    if (!user) return res.json("Use not found for count");
-    try {
-	    res.json(user.posts.length);
-	    console.log(user.posts.length);
-	} catch (err) {
-          console.log(err);
-	}
   }
 
   static async getPosts (req, res, next) {

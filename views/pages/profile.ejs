@@ -54,7 +54,7 @@
 			  posts.forEach(post => {
 			%>
 			  <p class="border">
-			    <a href='/posts/:id %>'><%= post.title %></a> created at <%= post.createdAt..toLocaleString("en-US", { hour: "numeric", minute: "numeric" })%>
+			    <a href='/posts/:<%= post._id %>'><%= post.title %></a> created at <%= post.createdAt%>
 			  </p>
 			<% });
 			} %>
@@ -94,7 +94,7 @@
 					id="fols-id"
 					alt="Portrait of a Woman"
 					loading="lazy"/>img
-			<a href="profile/:<% follow._id %>"><%= follow.username %></a> <%= follow.about %></p>
+			<a href="folprofile/:<%= follow.username %></a> <%= follow.about %></p>
 			<% });
 			} %>
 		</div>

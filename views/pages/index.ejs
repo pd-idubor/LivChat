@@ -13,8 +13,8 @@
 			</div>
 			<div class="navbar-nav ms-auto">
 				<form class="d-flex" action="/signin" method="post" id="signin-form">
-					<input class="form-control me-2" type="text" placeholder="Username" id="inputUsername">
-					<input class="form-control me-2" type="password" placeholder="Password" id=inputPassword>
+					<input class="form-control me-2" type="text" placeholder="Username" name='username' id="inputUsername">
+					<input class="form-control me-2" type="password" placeholder="Password" name='password' id=inputPassword>
 					<button class="btn btn-primary" type="submit">Login</button>
 				</form>
 			</div>
@@ -32,19 +32,19 @@
 				<p> Get connected today!</p>
 			</div>
 			<div class="col-md-5 my-4">
-				<form class="py-3" id="signup-form" action="/signup" method="post">
+				<form class="py-3" id="signup-form" action="/signup" method="POST">
 					<div class="mb-3 form-group">
 						<label class="form-label" for="inputUsername">Username</label>
-						<input type="username" class="form-control" id="inputUsername" placeholder="adam1000">
+						<input type="username" name="username" class="form-control" id="inputUsername" placeholder="adam1000">
 					</div>
 					<div class="mb-3 form-group">
 						<label class="form-label" for="inputEmail">Email</label>
-						<input type="email" class="form-control" id="inputEmail" placeholder="you@example.com">
+						<input type="email" name='email' class="form-control" id="inputEmail" placeholder="you@example.com">
 					</div>
 					<div class="mb-3">
 
 						<label class="form-label" for="inputPassword">Password</label>
-						<input type="password" class="form-control" id="inputPassword" placeholder="password">
+						<input type="password" class="form-control" name='password' id="inputPassword" placeholder="password">
 					</div>
 					<div class="form-group mb-3">
 						<div class="form-check">

@@ -3,12 +3,12 @@ import db from '../models/index.js';
 
 const Users = db.users;
 const Posts = db.posts;
-//Replace follower with moi ou current user and following with ami
+//Follower - c'est moi ou current user et following - un ami
 
 class FollowsController {
   static async followAction (req, res, next) {
     let { follower, following, action } = req.body;
-    // You have tonget following(friends) userId subsequently
+    // Get following(friends) userId subsequently
      console.log(req.userId);
      if (req.userId) {
        let follower = req.userId;
@@ -65,26 +65,6 @@ class FollowsController {
           console.log(err);
       }
   }
-
-  static async countFollowers (req, res, next) {
-    try {
-      const user = await Users.findById(req.userId);
-      if (!user) return res.json("No user found");
-      res.json(user.followers.length);
-    } catch (err) {
-       console.log(err);
-    }
-  }
-
-   static async countFollowing (req, res, next) {
-    try {
-      const user = await Users.findById(req.userId);
-      if (!user) return res.json("No user found");
-      res.json(user.following.length);
-    } catch (err) {
-	console.log(err);
-    }
-   }
    
   static async getFollowing (id) {
      try {
@@ -100,6 +80,7 @@ class FollowsController {
 		  const data = await Users.findById(follow._id);
 		  followsList.push(data);}
        }, Promise.resolve());
+      console.log(followsList);
       return (followsList);
        } catch (err) {
 	  console.log(err);
@@ -120,6 +101,7 @@ class FollowsController {
 	       followsList.push(data);}
        }, Promise.resolve());
 	    
+       console.log(followsList);
        return (followsList);
 	     
      } catch (err) {

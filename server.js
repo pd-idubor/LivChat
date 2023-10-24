@@ -23,7 +23,7 @@ const io = new Server(server);
 
 const port = process.env.PORT || 5000;
 
-// set the view engine to ejs
+// Set the view engine to ejs
 app.set('view engine', 'ejs');
 
 // Static files
@@ -77,7 +77,7 @@ app.use('/', router);
 dbClient;
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('A user connected');
   socket.on('disconnect', function() {
     console.log('Client disconnected.');
     });

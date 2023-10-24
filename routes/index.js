@@ -29,8 +29,10 @@ router.get('/dashboard/:username', [verifyToken, UsersController.getUser], async
 
 router.get('/profile/:username', [verifyToken, UsersController.getUser, PostsController.getPosts], async (req, res) => {
   const user = req.user;
-  const followers = await FollowsController.getFollowers(req.userId);
-  const following = await FollowsController.getFollowing(req.userId);
+  let followers = await FollowsController.getFollowers(req.userId);
+  let following = await FollowsController.getFollowing(req.userId);
+  if (followers === undefined ) followers = [];
+  if (following === undefined ) following = [];
   console.log('Index: ', followers);
   console.log(following);
     res.render('pages/profile', {
@@ -56,11 +58,11 @@ router.get('/flash', function(req, res) {
 
 // ----------------User routes----------------
 router.post('/signup', [UsersController.checkCred, verifySign, UsersController.signUp], function(req, res) {
-  res.redirect('dashboard/:username');
+  //res.redirect('dashboard/:username');
 });
 
 router.post('/signin', [UsersController.checkCred], UsersController.signIn, function(req, res) {
-  res.redirect('dashboard/:username')
+  //res.redirect('dashboard/:username')
 });
 
 router.get('/signout', UsersController.signOut, function(req, res) {
@@ -70,7 +72,8 @@ router.get('/signout', UsersController.signOut, function(req, res) {
 
 // --------------Posts routes-------------------
 router.post('/posts/create', [verifyToken, PostsController.createPost], function(req, res) {
-  res.redirect('/post/:id');
+  console.log(req);
+  res.redirect(`/post/:${req.newPost}`);
 });
 
 router.post('/post/:id', [verifyToken], async function(req, res) {
