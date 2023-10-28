@@ -65,13 +65,15 @@ class UsersController {
     req.session.user = user;
     req.session.token = token;
 
+    console.log(req.session.token);
     //req.flash('success', `Welcome ${username}`);
-    res.status(200).send({
+    /*res.status(200).send({
       id: user._id,
       username: user.username,
       email: user.email,
       token: token,
     })
+    */
     next();
     } catch(err) {
 	res.json(err);
@@ -108,13 +110,14 @@ class UsersController {
 	req.session.token = token;
 
         //req.flash('success', 'You\'re in');
-	console.log(user);
-	res.status(200).send({
+	console.log(user, req.session.token);
+	/*res.status(200).send({
           id: user._id,
           username: user.username,
           email: user.email,
           token: req.session.token,
         });
+	*/
 	next();
 	} catch (err) {
     	  res.json(err);
@@ -133,7 +136,7 @@ class UsersController {
     });*/
     try {
       req.session = null;
-      res.status(200).send({ message: "You've been signed out!"});
+      //res.status(200).send({ message: "You've been signed out!"});
       next();
       // req.flash('success', 'You logged out!');
     } catch (err) {
