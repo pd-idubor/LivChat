@@ -58,11 +58,11 @@ router.get('/flash', function(req, res) {
 
 // ----------------User routes----------------
 router.post('/signup', [UsersController.checkCred, verifySign, UsersController.signUp], function(req, res) {
-  //res.redirect('dashboard/:username');
+  res.redirect('dashboard/req.user.username');
 });
 
 router.post('/signin', [UsersController.checkSign], UsersController.signIn, function(req, res) {
-  //res.redirect('dashboard/:username')
+  res.redirect('dashboard/req.user.username')
 });
 
 router.get('/signout', UsersController.signOut, function(req, res) {
