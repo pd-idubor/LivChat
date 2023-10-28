@@ -61,7 +61,7 @@ router.post('/signup', [UsersController.checkCred, verifySign, UsersController.s
   //res.redirect('dashboard/:username');
 });
 
-router.post('/signin', [UsersController.checkCred], UsersController.signIn, function(req, res) {
+router.post('/signin', [UsersController.checkSign], UsersController.signIn, function(req, res) {
   //res.redirect('dashboard/:username')
 });
 
@@ -81,7 +81,6 @@ router.post('/post/:id', [verifyToken], async function(req, res) {
   res.render('pages/edit_post', {post: post});
 });
 
-router.get('/posts/count', [verifyToken], PostsController.postCount);
 
 router.post('/posts/update/:id', [verifyToken], PostsController.updatePost);
 

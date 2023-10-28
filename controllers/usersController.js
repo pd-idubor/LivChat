@@ -26,6 +26,16 @@ class UsersController {
     next();
   }
 
+  static checkSign (req, res, next) {
+    const { username, password } = req.body;
+    if (!username) return res.status(400).json({ error: 'Missing username' });
+    if (!password || !check.isLength(password, {min: 6})) {
+      return res.status(400).json({ error: 'Please enter a valid password' });
+    }
+    console.log("Checked");
+      next();
+  }
+
   static async signUp (req, res, next) {
     console.log("Creating new user");
     const { username, email, password } = req.body;

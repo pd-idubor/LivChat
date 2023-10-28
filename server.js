@@ -29,6 +29,7 @@ app.set('view engine', 'ejs');
 // Static files
 app.use(express.static("public"));
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 //cookieSession
@@ -53,7 +54,6 @@ app.use(cookieParser());
 
 //app.enable('trust proxy');
 app.use(cors(corsOptions));
-app.use(express.json());
 
 //Falsh messaging
 app.use(flash());
