@@ -115,6 +115,7 @@ class FollowsController {
       const posts = user['posts'];
       let postList = [];
       console.log('Fol-user name:', user);
+      if (posts === undefined) return (console.log("This user has no posts"));
       await posts.reduce(async (promise, post) => {
 	      await promise;
 	      if (follow !== null) {

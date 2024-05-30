@@ -10,11 +10,10 @@
 	<% } %>
 	<% if (user.following !== 0) { %>
 		<div class="py-3" id="follows-posts">
-		<% if (posts.length === 0) {%>
+		<% if (posts === undefined) {%>
 			<p>Your friends have not posted recently</p>
-		<% } %>
-		<% if(posts.length > 0) {
-		  posts.forEach(post => {%>
+		<% } else{ %>
+		  <% posts.forEach(post => {%>
 		    <p class="border">
 			<a href='/post/<%= post._id %>'><%= post.title %></a> created at <%= post.createdAt %>
 		    </p>

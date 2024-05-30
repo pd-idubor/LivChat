@@ -7,7 +7,7 @@ dotenv.config();
 class DBClient {
   constructor() {
     const url = `${process.env.MONGO_URL}`;
-    mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    mongoose.connect(url)
     .then(() => {
       console.log("Successfully connected to MongoDB.");
     })

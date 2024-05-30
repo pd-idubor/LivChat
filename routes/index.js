@@ -46,7 +46,8 @@ router.get('/profile/:username', [verifyToken, UsersController.getUser, PostsCon
 router.get('/folprofile/:foluser', [verifyToken], async (req, res) => {
   const follow = await FollowsController.getFolProfile(req.params.foluser);
   console.log('Route:', follow);
-//}
+  return;
+	//}
 });
 
 router.get('/flash', function(req, res) {

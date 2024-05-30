@@ -4,7 +4,7 @@ import config from './config.js';
 
 
 const verifyToken = async (req, res, next) => {
-  console.log(req.headers.cookie);
+  console.log("Header: ", req.headers);
   if (req.headers.cookie) req.session.token = req.headers.cookie.split('=')[1];
   console.log(req.session);
   let token = req.session.token;

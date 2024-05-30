@@ -85,11 +85,7 @@ class UsersController {
     await Users.findOne({
       username: req.body.username,
     })
-      .exec((err, user) => {
-        if (err) {
-          return res.status(500).send({ message: err });
-        }
-
+      .then((user) => {
         if (!user) {
           return res.status(404).json({ message: "User Not found." });
         }
@@ -123,6 +119,8 @@ class UsersController {
     	  res.json(err);
 	  console.log(err);
 	}
+      }).catch((err) => {
+	 return res.status(500).send({ message: err });
       });
  };
 
@@ -142,7 +140,7 @@ class UsersController {
     } catch (err) {
       res.json(err);
     }
-    req.flash('success', 'You\'ve logged out!');
+    //req.flash('success', 'You\'ve logged out!');
     next();
   }
   
