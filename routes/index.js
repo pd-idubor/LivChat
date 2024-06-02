@@ -62,7 +62,7 @@ router.post('/signup', [UsersController.checkCred, verifySign, UsersController.s
 });
 
 router.post('/signin', [UsersController.checkSign], UsersController.signIn, function(req, res) {
-    res.redirect('dashboard/req.user.username')
+    res.redirect('dashboard/req.user.username');
 });
 
 router.get('/signout', UsersController.signOut, function(req, res) {
@@ -75,8 +75,9 @@ router.get('/postpage', verifyToken, function(req, res) {
     res.render('pages/create_post');
 })
 router.post('/posts/create', [verifyToken, PostsController.createPost], function(req, res) {
-    console.log(req);
-    res.redirect(`/post/${req.newPost}`);
+    console.log("The request object ", req.session);
+    console.log("Newpost id ", req.session.post_id);
+    res.redirect(`/post/${req.session.post_id}`);
 });
 
 router.post('/post/:id', [verifyToken], async function(req, res) {
@@ -85,10 +86,13 @@ router.post('/post/:id', [verifyToken], async function(req, res) {
 });
 
 
-router.post('/posts/update/:id', [verifyToken], PostsController.updatePost);
+router.post('/posts/update/:id', [verifyToken, PostsController.updatePost], function(req, res) {
+    console.log("Postid ", req.session.post_id);
+    res.redirect(`/post/${req.session.post_id}`);
+});
 
 router.get('/posts/delete/:id', [verifyToken, PostsController.deletePost], function(req, res) {
-    res.redirect('/profile/req.user.username');
+    res.redirect('/profile/req.user.username}');
 });
 
 router.get('/post/:id', [verifyToken], async function(req, res) {
