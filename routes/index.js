@@ -105,6 +105,8 @@ router.get('/post/:id', [verifyToken], async function(req, res) {
 // -------------Follow routes-------------------
 router.post('/follow/:username', [verifyToken], FollowsController.followAction);
 
-
+router.all('*', (req, res) => {
+    res.render('pages/404');
+})
 
 export default router;
