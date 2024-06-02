@@ -9,7 +9,7 @@
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="22" alt="Portrait of a Woman" loading="lazy" />
                     </a>
                     <h4 class="me-3">Icon
-                        <%= user.username %>
+                        <%= user.username.toUpperCase() %>
                     </h4>
                     <!--< if(user && user._id != currentUser._id) { %>
                        < const following = user.following;
@@ -47,14 +47,24 @@
                             <% } %>
 
                                 <% if(posts.length > 0) {
-			  posts.forEach(post => {
-			%>
-                                    <p class="border">
-                                        <a href='/post/<%= post._id %>'>
-                                            <%= post.title %>
-                                        </a> created at
-                                        <%= post.createdAt%>
-                                    </p>
+			  posts.forEach(post => {%>
+                                    <div class="d-flex border rounded-3 p-2 mb-2">
+                                        <div class="flex-shrink-0">
+                                            <img class="rounded-circle" src="https://th.bing.com/th?q=Lion+Face+SVG&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&cc=NG&setlang=en&adlt=moderate&t=1&mw=247" alt="sample image">
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h5>
+                                                <%= post.user %><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></h5>
+                                            <h6>
+                                                <%= post.title %>
+                                            </h6>
+                                            <p>
+                                                <%= post.content %>
+                                            </p>
+                                            <a href='/post/<%= post._id %>' class="btn btn-sm btn-primary">View Post</a>
+
+                                        </div>
+                                    </div>
                                     <% });
 			} %>
                     </div>
@@ -66,12 +76,21 @@
 
                                 <% if(followers.length > 0) {
 			  followers.forEach(follow => { %>
-                                    <p class="border"> <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fol-id" alt="Portrait of a Woman" loading="lazy" />img
-                                        <a href='/profile/<%= follow.username %>'>
-                                            <%= follow.username %>
-                                        </a>
-                                        <%= follow.about %>
-                                    </p>
+                                    <div class="d-flex border rounded-3 p-2 mb-2">
+                                        <div class="flex-shrink-0">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fol-id" alt="Portrait of a Woman" loading="lazy" />
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <a href='/profile/<%= follow.username %>'>
+                                                <%= follow.username.toUpperCase() %>
+                                            </a>
+                                            <p>
+                                                <%= follow.about %>
+                                            </p>
+                                            <a href='/profile/<%= follow.username %>' class="btn btn-sm btn-primary">View Profile</a>
+
+                                        </div>
+                                    </div>
                                     <% });
 			} %>
                     </div>
@@ -84,12 +103,21 @@
                                 <% if(following.length > 0) {
 			  following.forEach(follow => {
 			%>
-                                    <p class="border"> <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fols-id" alt="Portrait of a Woman" loading="lazy" />img
-                                        <a href='/folprofile/<%= follow.username %>'>
-                                            <%= follow.username %>
-                                        </a>
-                                        <%= follow.about %>
-                                    </p>
+                                    <div class="d-flex border rounded-3 p-2 mb-2">
+                                        <div class="flex-shrink-0">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fols-id" alt="Portrait of a Woman" loading="lazy" />
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <a href='/folprofile/<%= follow.username %>'>
+                                                <%= follow.username.toUpperCase() %>
+                                            </a>
+                                            <p>
+                                                <%= follow.about %>
+                                            </p>
+                                            <a href='/folprofile/<%= follow.username %>' class="btn btn-sm btn-primary">View Profile</a>
+
+                                        </div>
+                                    </div>
                                     <% });
 			} %>
                     </div>
