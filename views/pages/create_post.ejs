@@ -1,21 +1,21 @@
 <%- include("../partials/header.ejs"); %>
 
-<%- include("../partials/nav.ejs"); %>
+    <%- include("../partials/nav.ejs"); %>
 
-<div class="container">
-	<div class="p-5 my-4 bg-light rounded-3">
-		<form id="createPost" class="py-3">
-			<div class="mb-5">
-				<label class="form-label" for="inputUsername">Title</label>
-					<input type="title" class="form-control" id="inputTitle" placeholder="Subject">
-			</div>
-			<div class="mb-3">
-				<label class="form-label" for="content">Content</label>
-				<textarea type="textarea" class="form-control" rows="5" id="inputContent" placeholder="What are your thoughts?"></textarea>
-			</div>
-			<button type="submit" class="btn btn-success">Save post</button>
-		</form>
-	</div>
+        <div class="container">
+            <div class="p-5 my-4 bg-light rounded-3">
+                <form id="createPost" action="/posts/create" method="POST" class="py-3">
+                    <div class="mb-5">
+                        <label class="form-label" for="inputTitle">Title</label>
+                        <input type="title" name='title' class="form-control" id="inputTitle" placeholder="Subject">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="inputContent">Content</label>
+                        <textarea type="textarea" name='content' class="form-control" rows="5" id="inputContent" placeholder="What are your thoughts?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Save post</button>
+                </form>
+            </div>
 
 
-<%- include("../partials/footer.ejs"); %>
+            <%- include("../partials/footer.ejs"); %>

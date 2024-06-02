@@ -3,36 +3,36 @@ import config from './config.js';
 
 
 
-const verifyToken = async (req, res, next) => {
-  console.log("Header: ", req.headers);
-  if (req.headers.cookie) req.session.token = req.headers.cookie.split('=')[1];
-  console.log(req.session);
-  let token = req.session.token;
+const verifyToken = async(req, res, next) => {
+    console.log("Header: ", req.headers);
+    // if (req.headers.cookie) req.session.token = req.headers.cookie.split('=')[1];
+    console.log(req.session);
+    let token = req.session.token;
 
-  console.log("________________");
-  console.log(req.session);
-  if (req.session.token) {
-    console.log("Good");
-  } else {
-    console.log("No user in session");
-  }
+    console.log("________________");
+    console.log(req.session);
+    if (req.session.token) {
+        console.log("Good");
+    } else {
+        console.log("No user in session");
+    }
 
-  const jwt = jsonwebtoken;
-  if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
-  }
+    const jwt = jsonwebtoken;
+    if (!token) {
+        return res.status(403).send({ message: "No token provided!" });
+    }
 
-  jwt.verify(token,
-            config.secret,
-            (err, decoded) => {
-              if (err) {
+    jwt.verify(token,
+        config.secret,
+        (err, decoded) => {
+            if (err) {
                 return res.status(401).send({
-                  message: "Unauthorized!",
+                    message: "Unauthorized!",
                 });
-              }
-	      req.userId = decoded.id;
-	      next();
-            });
+            }
+            req.userId = decoded.id;
+            next();
+        });
 };
 
 export default verifyToken;
