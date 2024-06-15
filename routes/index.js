@@ -80,18 +80,18 @@ router.post('/posts/create', [verifyToken, PostsController.createPost], function
     res.redirect(`/post/${req.session.post_id}`);
 });
 
-router.post('/post/:id', [verifyToken], async function(req, res) {
+router.get('/post/edit/:id', [verifyToken], async function(req, res) {
     const post = await PostsController.getPost(req.params.id);
     res.render('pages/edit_post', { post: post });
 });
 
 
-router.post('/posts/update/:id', [verifyToken, PostsController.updatePost], function(req, res) {
+router.post('/post/update/:id', [verifyToken, PostsController.updatePost], function(req, res) {
     console.log("Postid ", req.session.post_id);
-    res.redirect(`/post/${req.session.post_id}`);
+    res.redirect('/post/${req.session.post_id}');
 });
 
-router.get('/posts/delete/:id', [verifyToken, PostsController.deletePost], function(req, res) {
+router.get('/post/delete/:id', [verifyToken, PostsController.deletePost], function(req, res) {
     res.redirect('/profile/req.user.username}');
 });
 

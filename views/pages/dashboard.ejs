@@ -1,27 +1,46 @@
 <%- include("../partials/header.ejs"); -%>
 
-<%- include("../partials/nav.ejs"); -%>
+    <%- include("../partials/nav.ejs"); -%>
 
-<div class="container-fluid">
-	<div class="p-5 my-4 bg-light rounded-3 text-center">
-        <% if (user.following === 0) { %>
-		<h1>Welcome <%= user.username %>, your feed is empty.</h1>
-        	<p id="default" class="lead">Your feed displays the latest posts from the people you follow. Search for interesting posts with the search feature and follow other users with similar interests.</p>
-	<% } %>
-	<% if (user.following !== 0) { %>
-		<div class="py-3" id="follows-posts">
-		<% if (posts === undefined) {%>
-			<p>Your friends have not posted recently</p>
-		<% } else{ %>
-		  <% posts.forEach(post => {%>
-		    <p class="border">
-			<a href='/post/<%= post._id %>'><%= post.title %></a> created at <%= post.createdAt %>
-		    </p>
-		  <% });
+        <div class="container-fluid">
+            <div class="p-5 my-4 bg-light rounded-3">
+                <% if (user.following === 0) { %>
+                    <div class="text-center">
+                        <h1>Welcome
+                            <%= user.username %>, your feed is empty.</h1>
+                        <p id="default" class="lead">Your feed displays the latest posts from the people you follow. Search for interesting posts with the search feature and follow other users with similar interests.</p>
+                    </div>
+                    <% } %>
+                        <% if (user.following !== 0) { %>
+                            <div class="py-3" id="follows-posts">
+                                <% if (posts === undefined) {%>
+                                    <div class="text-center">
+                                        <p>Your friends have not posted recently</p>
+                                    </div>
+                                    <% } else{ %>
+                                        <% posts.forEach(post => {%>
+                                            <div class="d-flex border rounded-3 p-2 mb-2">
+                                                <div class="flex-shrink-0">
+                                                    <img class="rounded-circle" src="https://th.bing.com/th?q=Lion+Face+SVG&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&cc=NG&setlang=en&adlt=moderate&t=1&mw=247" alt="sample image">
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h5>
+                                                        <%= post.user %><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></h5>
+                                                    <h6>
+                                                        <%= post.title %>
+                                                    </h6>
+                                                    <p>
+                                                        <%= post.content %>
+                                                    </p>
+                                                    <a href='/post/<%= post._id %>' class="btn btn-sm btn-primary">View Post</a>
+
+                                                </div>
+                                            </div>
+                                            <% });
 		} %>
-		</div>
-	<% } %>
-	</div>
+                            </div>
+                            <% } %>
+            </div>
 
 
-<%- include("../partials/footer.ejs"); -%>
+            <%- include("../partials/footer.ejs"); -%>
