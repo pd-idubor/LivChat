@@ -4,9 +4,11 @@
 
         <div class="container-fluid">
             <div class="p-5 my-4 bg-light rounded-3">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center mb-2">
                     <a class="d-flex align-items-center me-3" href="#" id="userImg">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="22" alt="Portrait of a Woman" loading="lazy" />
+                        <% if(user.image) { %>
+                            <img src="<%=user.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
+                            <% }%>
                     </a>
                     <h4 class="me-3">Icon
                         <%= user.username.toUpperCase() %>
@@ -43,18 +45,22 @@
                 <div class="tab-content">
                     <div class="tab-pane active border px-3 pt-3" id="posts" role="tabpanel">
                         <% if (posts.length === 0) { %>
-                            <p> You have no posts, click posts button to share your thoughts </p>
+                            <p> You have no posts, click the 'Creat post' button to share your thoughts </p>
                             <% } %>
 
                                 <% if(posts.length > 0) {
 			  posts.forEach(post => {%>
                                     <div class="d-flex border rounded-3 p-2 mb-2">
                                         <div class="flex-shrink-0">
-                                            <img class="rounded-circle" src="https://th.bing.com/th?q=Lion+Face+SVG&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&cc=NG&setlang=en&adlt=moderate&t=1&mw=247" alt="sample image">
+                                            <% if(user.image) { %>
+                                                <img src="<%=user.image%>" class="rounded-circle m-3" height="30" alt="User's avatar" loading="lazy" />
+                                                <% }%>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h5>
-                                                <%= post.user %><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></h5>
+                                                <%= post.user %>
+                                            </h5>
+                                            <p><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></p>
                                             <h6>
                                                 <%= post.title %>
                                             </h6>
@@ -105,7 +111,9 @@
 			%>
                                     <div class="d-flex border rounded-3 p-2 mb-2">
                                         <div class="flex-shrink-0">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fols-id" alt="Portrait of a Woman" loading="lazy" />
+                                            <% if(follow.image) { %>
+                                                <img src="<%=follow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
+                                                <% }%>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <a href='/profile/<%= follow.username %>'>

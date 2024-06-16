@@ -1,10 +1,10 @@
 import express from 'express';
 import verifySign from '../utils/verify.js';
 import verifyToken from '../utils/auth.js';
+import graVatar from '../frontend-js/gravatar.js';
 import UsersController from '../controllers/usersController.js';
 import PostsController from '../controllers/postsController.js';
 import FollowsController from '../controllers/followsController.js';
-//import db from '../models/index.js';
 
 //const Posts = db.posts;
 //const Users = db.users;
