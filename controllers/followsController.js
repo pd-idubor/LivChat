@@ -143,5 +143,38 @@ class FollowsController {
         }
     }
 
+    static async getFellow(req, res, next) {
+        try {
+            let fellow = await Users.findById(req.params.id).populate('posts', 'followers');
+            if (!fellow) console.log('No fellow');
+            const image = await graVatar(fellow.email);
+            console.log("This is the image gotten", image);
+            const { url } = image;
+            console.log("Next ", url)
+            fellow.image = url;
+            console.log(fellow);
+            req.fellow = fellow;
+            next();
+        } catch (e) {
+            console.log(e);
+            return res.json("Error in retrieving fellow");
+        }
+    }
+
+    static async getFellowPosts(req, res, next) {
+        console.log("All your posts");
+        const fellow = await Users.findById(req.params.id).populate('posts');
+        if (!fellow) return res.json("User not found for all posts");
+        try {
+            let posts = fellow['posts'];
+            posts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            req.fellowPosts = posts;
+            console.log(req.fellowPosts);
+            next();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 }
 export default FollowsController;

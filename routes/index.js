@@ -1,7 +1,6 @@
 import express from 'express';
 import verifySign from '../utils/verify.js';
 import verifyToken from '../utils/auth.js';
-import graVatar from '../frontend-js/gravatar.js';
 import UsersController from '../controllers/usersController.js';
 import PostsController from '../controllers/postsController.js';
 import FollowsController from '../controllers/followsController.js';
@@ -27,14 +26,18 @@ router.get('/dashboard/:username', [verifyToken, UsersController.getUser], async
     });
 });
 
-router.get('/profile/:username', [verifyToken, UsersController.getUser, PostsController.getPosts], async(req, res) => {
+router.get('/profile/', [verifyToken, UsersController.getUser, PostsController.getPosts], async(req, res) => {
     const user = req.user;
+    console.log("User in profile/id route: ", user)
     let followers = await FollowsController.getFollowers(req.userId);
+    console.log("Request params: ", req.params);
     let following = await FollowsController.getFollowing(req.userId);
     if (followers === undefined) followers = [];
     if (following === undefined) following = [];
     console.log('Index: ', followers);
     console.log(following);
+    req.session.followers = followers;
+    req.session.following = following;
     res.render('pages/profile', {
         user: user,
         following: following,
@@ -43,11 +46,35 @@ router.get('/profile/:username', [verifyToken, UsersController.getUser, PostsCon
     })
 });
 
-router.get('/folprofile/:foluser', [verifyToken], async(req, res) => {
-    const follow = await FollowsController.getFolProfile(req.params.foluser);
-    console.log('Route:', follow);
-    return;
-    //}
+// router.get('/folprofile/:foluser', [verifyToken], async(req, res) => {
+//     const follow = await FollowsController.getFolProfile(req.params.foluser);
+//     console.log('Route:', follow);
+//     return;
+//     //}
+// });
+router.get('/folprofile/:id', [verifyToken, UsersController.getUser, FollowsController.getFellow, FollowsController.getFellowPosts], async(req, res) => {
+    let followers = await FollowsController.getFollowers(req.params.id);
+    console.log("Request params: ", req.params);
+    let following = await FollowsController.getFollowing(req.params.id);
+    if (followers === undefined) followers = [];
+    if (following === undefined) following = [];
+    console.log('Index: ', followers);
+    console.log(following);
+    let user = req.user;
+    console.log("This is follow info user: ", user);
+    // user.following = req.session.following;
+    console.log("User.following: ", JSON.parse(JSON.stringify(user.following)));
+    console.log("Type", typeof(user.following[3]));
+    console.log(user.following[3]);
+    console.log("User type", typeof(user._id));
+    console.log("UserId: ", user._id);
+    res.render('pages/fellow', {
+        user: user,
+        fellow: req.fellow,
+        following: following,
+        followers: followers,
+        fellowPosts: req.fellowPosts
+    })
 });
 
 router.get('/flash', function(req, res) {

@@ -138,10 +138,9 @@ class UsersController {
             next();
             // req.flash('success', 'You logged out!');
         } catch (err) {
-            res.json(err);
+            console.log(err);
         }
         //req.flash('success', 'You\'ve logged out!');
-        next();
     }
 
     static async getUser(req, res, next) {
@@ -153,8 +152,8 @@ class UsersController {
             const { url } = image;
             console.log("Next ", url)
             user.image = url;
-            console.log(user);
             req.user = user;
+            console.log("Req.user logged: ", user);
             next();
         } catch (e) {
             console.log(e);

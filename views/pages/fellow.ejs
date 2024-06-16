@@ -6,29 +6,33 @@
             <div class="p-5 my-4 bg-light rounded-3">
                 <div class="d-flex align-items-center mb-2">
                     <a class="d-flex align-items-center me-3" href="#" id="userImg">
-                        <% if(user.image) { %>
-                            <img src="<%=user.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
+                        <% if(fellow.image) { %>
+                            <img src="<%=fellow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
                             <% }%>
                     </a>
                     <h4 class="me-3">Icon
-                        <%= user.username.toUpperCase() %>
+                        <%= fellow.username.toUpperCase() %>
                     </h4>
-                    <!--< if(user && user._id != currentUser._id) { %>
-                       < const following = user.following;
-                          const action = following.includes(currentUser._id) ? 'unfollow' : 'follow';
-                       %>
-                        <button class="btn btn-primary ml-4" data-action="<= action %>" data-follower="<= user._id %>" data-following="<= currentUser._id %>" id="follow-btn">Follow</button>
-                       <} %>
-			<button type="button" class="active btn btn-success text-white" id="follow">Follow <i id="fol-icon" class="fas fa-user-check"></i><i id="unfol-icon" class="fas fa-user-large-slash d-none"></i>
-			</button>
-		-->
+                    <% if(user._id && fellow._id) { %>
+                        <% const following = user.following;
+						let follow, unfollow;
+                          const action = following.includes(fellow._id) ? unfollow : follow;
+                        %>
+                            <% if (action === unfollow) { %>
+                                <button class="btn btn-primary ml-4" data-action="<%= action %>" data-follower="<%= user._id %>" data-following="<%= user._id %>" id="follow-btn">Unfollow<i id="unfol-icon" class="fas fa-user-large-slash d-none"></i></button>
+
+                                <% }else {%>
+                                    <button class="active btn btn-success text-white" id="follow">Follow <i id="fol-icon" class="fas fa-user-check"></i></i></button>
+                                    <%}%>
+                                        <%}%>
+
                 </div>
                 <nav>
                     <!-- Nav tabs -->
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab"> Posts: <%= posts.length %></button>
+                            <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab"> Posts: <%= fellowPosts.length %></button>
                         </li>
 
                         <li class="nav-item" role="presentation">
@@ -44,30 +48,30 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane active border px-3 pt-3" id="posts" role="tabpanel">
-                        <% if (posts.length === 0) { %>
-                            <p> You have no posts, click the 'Creat post' button to share your thoughts </p>
+                        <% if (fellowPosts.length === 0) { %>
+                            <p> This user has no posts </p>
                             <% } %>
 
-                                <% if(posts.length > 0) {
-			  posts.forEach(post => {%>
+                                <% if(fellowPosts.length > 0) {
+			  fellowPosts.forEach(fellowPost => {%>
                                     <div class="d-flex border rounded-3 p-2 mb-2">
                                         <div class="flex-shrink-0">
-                                            <% if(user.image) { %>
-                                                <img src="<%=user.image%>" class="rounded-circle m-3" height="30" alt="User's avatar" loading="lazy" />
+                                            <% if(fellowPost.image) { %>
+                                                <img src="<%=fellow.image%>" class="rounded-circle m-3" height="30" alt="User's avatar" loading="lazy" />
                                                 <% }%>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h5>
-                                                <%= post.user %>
+                                                <%= fellowPost.user %>
                                             </h5>
-                                            <p><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></p>
+                                            <p><small class="text-muted"><i> Posted on <%= fellowPost.createdAt.toDateString() %></i></small></p>
                                             <h6>
-                                                <%= post.title %>
+                                                <%= fellowPost.title %>
                                             </h6>
                                             <p>
-                                                <%= post.content %>
+                                                <%= fellowPost.content %>
                                             </p>
-                                            <a href='/post/<%= post._id %>' class="btn btn-sm btn-primary">View Post</a>
+                                            <a href='/post/<%= fellowPost._id %>' class="btn btn-sm btn-primary">View Post</a>
 
                                         </div>
                                     </div>
@@ -87,7 +91,7 @@
                                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fol-id" alt="Portrait of a Woman" loading="lazy" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <a href='/folprofile/<%= follow._id %>'>
+                                            <a href='/folprofile/<%= follow.username %>'>
                                                 <%= follow.username.toUpperCase() %>
                                             </a>
                                             <p>
