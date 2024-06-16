@@ -44,27 +44,20 @@ class PostsController {
         req.session.user = user;
         if (req.session.user) {
             try {
-                const post = Posts.findById(req.params.id);
-                if (!post) return res.json('No such post');
                 const { title, content } = req.body;
-                Users.findOneAndUpdate({
-                    _id: req.session.user._id,
-                    posts: { _id: req.params.id }
+                Posts.findOneAndUpdate({
+                    _id: req.params.id
                 }, {
                     $set: { title: title, content: content }
                 }).then(result => {
-                    (console.log({ updated: true, postdata: data }));
+                    (console.log({ updated: true, postdata: postId }));
                 });
-                //     (err, data) => {
-                //     (console.log({ updated: true, postdata: data }))
-                // });
+
+                req.session.post_id = req.params.id;
                 console.log("Post updated");
                 next();
-                // req.session.post_id = post._id;
-                // console.log("Post id ", req.session.post_id);
 
             } catch (err) {
-                //res.json(err);
                 console.log(err);
             }
         }

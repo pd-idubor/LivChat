@@ -81,6 +81,7 @@ router.post('/posts/create', [verifyToken, PostsController.createPost], function
 });
 
 router.get('/post/edit/:id', [verifyToken], async function(req, res) {
+    console.log('edit subject: ', req.params.id, "\nType: ", typeof(req.params.id));
     const post = await PostsController.getPost(req.params.id);
     res.render('pages/edit_post', { post: post });
 });
@@ -88,7 +89,7 @@ router.get('/post/edit/:id', [verifyToken], async function(req, res) {
 
 router.post('/post/update/:id', [verifyToken, PostsController.updatePost], function(req, res) {
     console.log("Postid ", req.session.post_id);
-    res.redirect('/post/${req.session.post_id}');
+    res.redirect(`/post/${req.session.post_id}`);
 });
 
 router.get('/post/delete/:id', [verifyToken, PostsController.deletePost], function(req, res) {
