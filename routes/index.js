@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
 router.get('/dashboard/:username', [verifyToken, UsersController.getUser], async(req, res) => {
     const user = req.user;
     const result = await FollowsController.dashContent(req.userId);
-    console.log('index', result);
+    console.log('User dashboard requested');
     res.render('pages/dashboard', {
         posts: result,
         user: user
@@ -27,15 +27,15 @@ router.get('/dashboard/:username', [verifyToken, UsersController.getUser], async
 });
 
 router.get('/profile/', [verifyToken, UsersController.getUser, PostsController.getPosts], async(req, res) => {
+    console.log("User profile requested");
     const user = req.user;
-    console.log("User in profile/id route: ", user)
     let followers = await FollowsController.getFollowers(req.userId);
-    console.log("Request params: ", req.params);
+    // console.log("Request params: ", req.params);
     let following = await FollowsController.getFollowing(req.userId);
     if (followers === undefined) followers = [];
     if (following === undefined) following = [];
-    console.log('Index: ', followers);
-    console.log(following);
+    // console.log('Index: ', followers);
+    // console.log(following);
     req.session.followers = followers;
     req.session.following = following;
     res.render('pages/profile', {
@@ -53,21 +53,22 @@ router.get('/profile/', [verifyToken, UsersController.getUser, PostsController.g
 //     //}
 // });
 router.get('/folprofile/:id', [verifyToken, UsersController.getUser, FollowsController.getFellow, FollowsController.getFellowPosts], async(req, res) => {
+    console.log(`A fellow's profile was requested with id: ${req.params.id}`);
     let followers = await FollowsController.getFollowers(req.params.id);
-    console.log("Request params: ", req.params);
+    // console.log("Request params: ", req.params);
     let following = await FollowsController.getFollowing(req.params.id);
     if (followers === undefined) followers = [];
     if (following === undefined) following = [];
-    console.log('Index: ', followers);
-    console.log(following);
+    // console.log('Index: ', followers);
+    // console.log(following);
     let user = req.user;
-    console.log("This is follow info user: ", user);
+    // console.log("This is follow info user: ", user);
     // user.following = req.session.following;
-    console.log("User.following: ", JSON.parse(JSON.stringify(user.following)));
-    console.log("Type", typeof(user.following[3]));
-    console.log(user.following[3]);
-    console.log("User type", typeof(user._id));
-    console.log("UserId: ", user._id);
+    // console.log("User.following: ", JSON.parse(JSON.stringify(user.following)));
+    // console.log("Type", typeof(user.following[3]));
+    // console.log(user.following[3]);
+    // console.log("User type", typeof(user._id));
+    // console.log("UserId: ", user._id);
     res.render('pages/fellow', {
         user: user,
         fellow: req.fellow,
@@ -75,11 +76,6 @@ router.get('/folprofile/:id', [verifyToken, UsersController.getUser, FollowsCont
         followers: followers,
         fellowPosts: req.fellowPosts
     })
-});
-
-router.get('/flash', function(req, res) {
-    req.flash('info', 'Flash is working');
-    res.redirect('/');
 });
 
 
@@ -102,7 +98,7 @@ router.get('/postpage', verifyToken, function(req, res) {
     res.render('pages/create_post');
 })
 router.post('/posts/create', [verifyToken, PostsController.createPost], function(req, res) {
-    console.log("The request object ", req.session);
+    // console.log("The request object ", req.session);
     console.log("Newpost id ", req.session.post_id);
     res.redirect(`/post/${req.session.post_id}`);
 });
@@ -131,7 +127,14 @@ router.get('/post/:id', [verifyToken], async function(req, res) {
 
 
 // -------------Follow routes-------------------
-router.post('/follow/:username', [verifyToken], FollowsController.followAction);
+router.post('/follow/:username', [verifyToken], FollowsController.followAction, function(req, res) {
+    console.log("The followAction function of FollowsController was called!!!");
+});
+
+router.post('/chat/id', [verifyToken], function(req, res) {
+    console.log("The chat section was required");
+});
+
 
 router.all('*', (req, res) => {
     res.render('pages/404');

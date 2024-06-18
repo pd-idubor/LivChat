@@ -1,8 +1,6 @@
-// require('dotenv').config()
 import router from './routes/index.js';
 import cookieSession from 'cookie-session'
 import cookieParser from 'cookie-parser';
-//import session from 'express-session';
 import flash from 'connect-flash';
 import cors from "cors";
 import dbClient from './utils/db.js';
@@ -13,7 +11,7 @@ import { Server } from 'socket.io';
 
 
 let corsOptions = {
-  origin: "http://localhost:8080"
+    origin: "http://localhost:8080"
 };
 
 
@@ -34,42 +32,35 @@ app.use(express.urlencoded({ extended: true }))
 
 //cookieSession
 app.use(
-  cookieSession({
-    name: "livchat-session",
-    keys: ["COOKIE_SECRET"],
-    httpOnly: true
-  })
+    cookieSession({
+        name: "livchat-session",
+        keys: ["COOKIE_SECRET"],
+        httpOnly: true
+    })
 );
 
-
-/*app.use(session({
-  secret: "livchat2812",
-  saveUninitialized:true,
-  cookie: { maxAge: 86400},
-  resave: false
-}));
-*/
 app.use(cookieParser());
 
 
 //app.enable('trust proxy');
 app.use(cors(corsOptions));
 
-//Falsh messaging
+//Flash messaging
 app.use(flash());
-/*app.use(flash());
-app.use((req, res, next) =>{
-  res.locals.flashMessages = req.flash();
-	
+app.use(function(req, res, next) {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
 });
-*/
+
+
 
 app.use(function(req, res, next) {
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, Content-Type, Accept"
-  );
-  next();
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, Content-Type, Accept"
+    );
+    next();
 });
 
 app.use('/', router);
@@ -77,15 +68,15 @@ app.use('/', router);
 dbClient;
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
-  socket.on('disconnect', function() {
-    console.log('Client disconnected.');
+    console.log('A user connected');
+    socket.on('disconnect', function() {
+        console.log('Client disconnected.');
     });
 });
 
 server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
- 
+
 
 export default server;

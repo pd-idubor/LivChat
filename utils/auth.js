@@ -4,15 +4,13 @@ import config from './config.js';
 
 
 const verifyToken = async(req, res, next) => {
-    console.log("Header: ", req.headers);
     // if (req.headers.cookie) req.session.token = req.headers.cookie.split('=')[1];
-    console.log(req.session);
+    // console.log(req.session);
     let token = req.session.token;
 
-    console.log("________________");
-    console.log(req.session);
+    console.log("----------------------------------------");
     if (req.session.token) {
-        console.log("Good");
+        console.log("Session token still valid");
     } else {
         console.log("No user in session");
     }

@@ -1,4 +1,4 @@
-import graVatar from '../frontend-js/gravatar.js';
+import graVatar from '../utils/gravatar.js';
 import db from '../models/index.js';
 
 

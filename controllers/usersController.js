@@ -2,9 +2,8 @@ import validator from 'validator';
 import db from "../models/index.js";
 import jsonwebtoken from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import verifySign from '../utils/verify.js';
 import config from '../utils/config.js';
-import graVatar from '../frontend-js/gravatar.js';
+import graVatar from '../utils/gravatar.js';
 
 
 const check = validator;
@@ -14,7 +13,6 @@ const jwt = jsonwebtoken;
 
 class UsersController {
     static checkCred(req, res, next) {
-        console.log("Checking");
         const { username, email, password } = req.body;
         if (!username) return res.status(400).json({ error: 'Missing username' });
         if (!email || !check.isEmail(email)) {
@@ -23,7 +21,7 @@ class UsersController {
         if (!password || !check.isLength(password, { min: 6 })) {
             return res.status(400).json({ error: 'Please enter a valid password' });
         }
-        console.log("Checked");
+        console.log("Login credentials checked");
         next();
     }
 
@@ -33,14 +31,14 @@ class UsersController {
         if (!password || !check.isLength(password, { min: 6 })) {
             return res.status(400).json({ error: 'Please enter a valid password' });
         }
-        console.log("Checked");
+        console.log("New login details checked");
         next();
     }
 
     static async signUp(req, res, next) {
-        console.log("Creating new user");
+        console.log("Signing up new user");
         const { username, email, password } = req.body;
-        const user = await new Users({
+        const user = new Users({
             username,
             email,
             password
@@ -48,16 +46,8 @@ class UsersController {
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-
-        console.log("Saving");
         await user.save();
-        /*((err, user)=> {
-             if (err) {
-               res.status(500).send({ message: err });
-             };
-           });
-         */
-        console.log("Saved");
+
         try {
             const token = jwt.sign({ id: user.id }, config.secret, {
                 algorithm: 'HS256',
@@ -67,14 +57,9 @@ class UsersController {
             req.session.token = token;
 
             console.log(req.session.token);
-            //req.flash('success', `Welcome ${username}`);
-            /*res.status(200).send({
-              id: user._id,
-              username: user.username,
-              email: user.email,
-              token: token,
-            })
-            */
+            req.flash('success', `Welcome ${username}`);
+
+            console.log("Welcome new user");
             next();
         } catch (err) {
             res.json(err);
@@ -105,15 +90,9 @@ class UsersController {
                     req.session.user = user;
                     req.session.token = token;
 
-                    //req.flash('success', 'You\'re in');
-                    console.log(user, req.session.token);
-                    /*res.status(200).send({
-          id: user._id,
-          username: user.username,
-          email: user.email,
-          token: req.session.token,
-        });
-	*/
+                    req.flash('success', 'You\'re logged in');
+                    console.log("Successful signin with token: ", req.session.token);
+
                     next();
                 } catch (err) {
                     res.json(err);
@@ -125,22 +104,12 @@ class UsersController {
     };
 
     static signOut(req, res, next) {
-        /*req.session.destroy((err) => {
-          if (err) {
-          console.log(err);
-          } else {
-            res.redirect('/login');
-          }
-        });*/
         try {
             req.session = null;
-            //res.status(200).send({ message: "You've been signed out!"});
             next();
-            // req.flash('success', 'You logged out!');
         } catch (err) {
             console.log(err);
         }
-        //req.flash('success', 'You\'ve logged out!');
     }
 
     static async getUser(req, res, next) {
@@ -148,12 +117,10 @@ class UsersController {
             let user = await Users.findById(req.userId).populate('posts', 'followers');
             if (!user) console.log('No user');
             const image = await graVatar(user.email);
-            console.log("This is the image gotten", image);
             const { url } = image;
-            console.log("Next ", url)
             user.image = url;
             req.user = user;
-            console.log("Req.user logged: ", user);
+            console.log("User details including avatar successfully retrieved!")
             next();
         } catch (e) {
             console.log(e);

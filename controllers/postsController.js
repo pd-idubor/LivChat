@@ -8,11 +8,10 @@ class PostsController {
     static async createPost(req, res, next) {
         const user = await Users.findById(req.userId);
         req.session.user = user;
-        console.log("Post creation");
         if (req.session.user) {
             try {
                 const { title, content } = req.body;
-                const post = await new Posts({
+                const post = new Posts({
                     user: req.session.user.username,
                     title,
                     content,
@@ -22,7 +21,6 @@ class PostsController {
                     Users.findOneAndUpdate({ _id: req.session.user._id }, { $push: { posts: post._id } }, { new: true, useFindAndModify: false })
                         .then(result => {
                             req.session.post_id = post._id;
-                            console.log("Post id ", req.session.post_id);
                             console.log({ created: true, postid: post._id });
                             next();
                         });
@@ -64,16 +62,12 @@ class PostsController {
     }
 
     static async deletePost(req, res, next) {
-        console.log("Post deletion");
         const user = await Users.findById(req.userId);
-        console.log(req.params);
         req.session.user = user;
         if (req.session.user) {
-            console.log("If block")
             try {
-                console.log("Try block")
                 Users.findOneAndUpdate({ _id: req.session.user._id }, { $pull: { posts: req.params.id } }).then((result) => {
-                    console.log("Deleted");
+                    console.log("Post deletion successful");
                     next();
                 })
 
@@ -84,14 +78,13 @@ class PostsController {
     }
 
     static async getPosts(req, res, next) {
-        console.log("All your posts");
         const user = await Users.findById(req.userId).populate('posts');
         if (!user) return res.json("User not found for all posts");
         try {
             let posts = user['posts'];
             posts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             req.posts = posts;
-            console.log(req.posts);
+            console.log("All posts retrieved");
             next();
         } catch (err) {
             console.log(err);

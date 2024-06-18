@@ -1,44 +1,43 @@
-<%- include("../partials/header.ejs"); %>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a href="#" class="navbar-brand">Livchat</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">Livchat</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav">
-                        <a href="#" id="profilePg" class="nav-item nav-link active">
-                            <i class="fas fa-house-chimney-window"></i> Home
-                        </a>
-                    </div>
-                    <div class="navbar-nav ms-auto">
-                        <!-- Search panel -->
-                        <div class="dropdown">
-                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"><i class="fas fa-magnifying-glass"></i></button>
-                            <div id="search-container" class="dropdown-menu">
-                                <input class="dropdown-item" type="search" id="search-bar" placeholder="Search posts..." />
-                                <div class="dropdown-item" id="results-container">
-                                </div>
-                                <p class="dropdown-item d-none" id="unavailMsg"></p>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="#" id="profilePg" class="nav-item nav-link active">
+                        <i class="fas fa-house-chimney-window"></i> Home
+                    </a>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <!-- Search panel -->
+                    <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"><i class="fas fa-magnifying-glass"></i></button>
+                        <div id="search-container" class="dropdown-menu">
+                            <input class="dropdown-item" type="search" id="search-bar" placeholder="Search posts..." />
+                            <div class="dropdown-item" id="results-container">
                             </div>
+                            <p class="dropdown-item d-none" id="unavailMsg"></p>
                         </div>
+                    </div>
 
-                        <ul class="navbar-nav d-flex flex-row me-2">
-                            <li class="nav-item me-3 me-lg-0">
-                                <a class="nav-link text-white me-1" id="chat" href="/chat"><i class="far fa-comments"></i></a>
-                            </li>
-                            <li class="nav-item me-3 me-lg-0">
-                                <a class="nav-link text-white" id="profile" href="/profile"><i class="fas fa-user mx-1"></i></a>
-                            </li>
-                        </ul>
-                        <div class="d-flex align-items-center">
-                            <a role="button" href="/postpage" id="createPost" class="btn btn-success me-3">Create post</a>
-                            <a role="button" href="/signout" id="logout" class="btn btn-secondary me-3">Log out</a>
-                        </div>
+                    <ul class="navbar-nav d-flex flex-row me-2">
+                        <li class="nav-item me-3 me-lg-0">
+                            <a class="nav-link text-white me-1" id="chat" href="/chat"><i class="far fa-comments"></i></a>
+                        </li>
+                        <li class="nav-item me-3 me-lg-0">
+                            <a class="nav-link text-white" id="profile" href="/profile"><i class="fas fa-user mx-1"></i></a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <a role="button" href="/postpage" id="createPost" class="btn btn-success me-3">Create post</a>
+                        <a role="button" href="/signout" id="logout" class="btn btn-secondary me-3">Log out</a>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <main>
+        </div>
+    </nav>
+</header>
+<main>

@@ -1,23 +1,17 @@
-import crypto from "crypto";
-import request from "request";
+import crypto from 'crypto';
 
+export default async function graVatar(email) {
+    let image;
+    if (!email) email = "example@hotmail.com";
+    /* Generate a md5-hash of a email address and return its hexadecimal value */
+    var hash = crypto.createHash('md5').update(email).digest("hex");
 
-const Gravatar = (req, res, next) => {
+    /* Sends a GET request for a user's avatar */
+    const response = fetch("https://www.gravatar.com/avatar/" + hash + ".jpg");
+    console.log("Got image: " + response);
+    const { url } = response;
+    console.log(url);
+    image = response;
+    return image;
 
-  let hash = crypto.createHash('md5').update(user.email).digest("hex");
-
-  /* Sends a GET request for the avatar */
-  request("https://www.gravatar.com/avatar/"+hash+".jpg",function(err,res, data){
-    if (!err){
-      req.userImg = body; 
-      console.log("Reaponse: ", res);
-      console.log("Got image: ", data);
-    }else{
-      console.log("Image Error: "+err);
-    }
-  next();
-  }
-);
-}
-
-export default Gravatar;
+};
