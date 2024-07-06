@@ -1,6 +1,5 @@
-import db from '../models/index.js';
+console.log("Live search file is loaded...");
 
-console.log("Live search file is loading...");
 
 const searchBar = document.getElementById("search-bar");
 const resultsContainer = document.getElementById("results-container");
@@ -10,21 +9,23 @@ let postList;
 let searchValue;
 let postsSearchRes;
 
-// Fetch posts from the DB
+// Fetch posts via api
 const fetchPosts = async() => {
     try {
-        const response = await db.posts.find();
-        //Call api instead with max number of code allowed or use mongo's;
+        const response = await fetch('/posts', {
+            method: 'GET',
+        });
+        console.log("Response: ", response);
+
         postList = await response.json();
+
+        console.log("Type of Post list: ", typeof(postList));
         console.log("Post list: ", postList);
 
         // Store posts data in browser storage
-        /*     localStorage.setItem("postdata", JSON.stringify(postList));
-        localStorage.setItem("cacheTimestamp", Date.now());
-*/
+        /* localStorage.setItem("postdata", JSON.stringify(postList));
+         localStorage.setItem("cacheTimestamp", Date.now());*/
 
-        // Render the posts on the page
-        // renderPosts(postList);
     } catch (error) {
         unavailTxt.innerHTML =
             "An error occurred while fetching posts. <br /> Please try again later.";
@@ -40,22 +41,24 @@ const renderPosts = (posts) => {
     postsSearchRes = [];
 
     posts.forEach((post) => {
+        console.log("Type of postid: ", typeof(post._id));
+        console.log("Post id: ", post._id);
         resultsContainer.innerHTML += `
-      <div class="post-cards p-2 border-bottom bg-light">
-        <h5 class="title"><a href="/post/${post.id}">${post.title}</a></h5>
+      <div class="search-card p-2 border-bottom bg-light">
+        <h5 class="title"><a href="/post/${post._id}">${post.title}</a></h5>
         <p class="content">${post.content}</p>
-       <p class="author">${post.user}</p>
-        <p class="date">${post.createdAt}</p>
       </div>
     `;
+        /*<div class="post-cards">
+                <h3 class="title">${post.title}</h3>
+                <p class="author">${post.user}</p>
+              </div>*/
+        // <p class="content">${post.content}</p>
+        // <p class="date">${post.createdAt}</p>
 
-        /*<p class="author">${post.user}</p>
-        <p class="date">${post.createdAt}</p>
-*/
         postsSearchRes.push(post);
     });
 };
-
 /*
 const cacheTimestamp = localStorage.getItem("cacheTimestamp");
 const expirationDuration = 3600000; // 1 hours in milliseconds
@@ -70,10 +73,12 @@ if (!cacheTimestamp ||
     // Use cached post data
     postList = JSON.parse(localStorage.getItem("postdata"));
     renderPosts(postList);
-}*/
+}
+*/
 fetchPosts();
 searchBar.addEventListener("input", (event) => {
     searchValue = event.target.value.trim().toLowerCase();
+    console.log("Search value: ", searchValue);
 
     const filteredPosts = postList.filter((post) =>
         post.content.toLowerCase().includes(searchValue),

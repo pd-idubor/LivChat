@@ -97,6 +97,18 @@ class PostsController {
         return post;
     }
 
+    static async allPosts(req, res, next) {
+        const posts = await Posts.find();
+        // console.log(posts);
+        if (!posts) return res.json("The database has no posts");
+        try {
+            res.send(posts);
+            console.log("Database posts retrieved");
+            next();
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 
 export default PostsController;

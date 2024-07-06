@@ -1,13 +1,18 @@
-const path = require('path')
-const webpack = require('webpack')
+import path from 'path';
+import webpack from 'webpack';
+import { fileURLToPath } from "url";
+const __dirname = path.dirname(fileURLToPath(
+    import.meta.url));
 
-module.exports = {
+
+export default {
     entry: './frontend-js/main.js',
     output: {
         filename: 'main-bundled.js',
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, './public/js')
     },
-    mode: "production",
+    mode: 'development',
+    devtool: 'source-map',
     module: {
         rules: [{
             test: /\.js$/,

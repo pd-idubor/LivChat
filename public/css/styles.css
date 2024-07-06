@@ -1,3 +1,14 @@
 #postCard {
-  border: solid 2px teal;
-  }
+    border: solid 2px teal;
+}
+
+.title a {
+    text-decoration: none;
+}
+
+
+/*  */
+
+#results-container div:hover {
+    opacity: 80%;
+}

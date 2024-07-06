@@ -94,6 +94,9 @@ router.get('/signout', UsersController.signOut, function(req, res) {
 
 
 // --------------Posts routes-------------------
+router.get('/posts', [verifyToken, PostsController.allPosts], function(req, res) {
+
+})
 router.get('/postpage', verifyToken, function(req, res) {
     res.render('pages/create_post');
 })
