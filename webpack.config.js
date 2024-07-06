@@ -6,9 +6,9 @@ const __dirname = path.dirname(fileURLToPath(
 
 
 export default {
-    entry: './frontend-js/main.js',
+    entry: './frontend-js/search.js',
     output: {
-        filename: 'main-bundled.js',
+        filename: 'search-bundled.js',
         path: path.resolve(__dirname, './public/js')
     },
     mode: 'development',

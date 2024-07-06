@@ -1,5 +1,48 @@
 <hr>
 </main>
+<!-- Chat Panel Start -->
+<div class="col-sm-6 col-md-5 col-lg-5 col-xl-4 border d-none" style="position: absolute; bottom:0; right: 0;">
+
+    <div class="card overflow-auto">
+
+        <div class="card-header d-flex justify-content-between align-items-center p-3" style="background-color: #f5f6f7; border-top: 4px solid #008080; position:sticky; top:0; z-index: 2;">
+
+            <h5 class="mb-0">Chat Panel</h5>
+
+            <div class="d-flex flex-row align-items-center">
+
+                <span class="badge me-3" style="background-color: #008080;">#</span>
+                <i class="fas fa-times text-muted fa-xs"></i>
+
+            </div>
+
+        </div>
+
+        <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 30em">
+            <!-- Chat posts -->
+            <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3" style="background-color: #f5f6f7; position:sticky; bottom:0; z-index: 2;">
+
+                <div class="input-group mb-0">
+
+                    <input type="text" class="form-control" placeholder="Type message" aria-label="Recipient's username" aria-describedby="button-addon2" />
+
+                    <button class="btn btn-secondary" type="button" id="button-addon2" style="padding-top: .55rem;">
+    
+                    Send
+    
+                  </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <footer>
     <div class="row">
         <div class="col-md-12 text-center">
@@ -8,8 +51,9 @@
     </div>
 </footer>
 </div>
-<script src="/js/main-bundled.js"></script>
-<script src="/js/main.js"></script>
+<script src="/js/search-bundled.js"></script>
+<script src="/js/chat.js"></script>
+<script src="/js/search.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
