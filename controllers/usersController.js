@@ -1,7 +1,7 @@
 import validator from 'validator';
 import db from "../models/index.js";
 import jsonwebtoken from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import config from '../utils/config.js';
 import graVatar from '../utils/gravatar.js';
 
