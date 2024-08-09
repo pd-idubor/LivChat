@@ -10,6 +10,12 @@
             /* background-color: slategrey; */
             text-decoration: none;
         }
+        
+        .chatpanel {
+            /* display: none; */
+            /* height: 0; */
+            transition: 0.5s;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -18,6 +24,7 @@
 
 <body>
     <p class="text-center">Yellow</p>
+    <button type="button" class="btn btn-info" id="togglechat" onclick="myFunc()">Chat box</button>
     <!-- Large modal -->
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Large modal</button>
     <main class="px-5">
@@ -88,7 +95,7 @@
 
     <!-- <div class="row d-flex justify-content-center"> -->
 
-    <div class="col-md-8 col-lg-6 col-xl-4 w-50 border" style="position: absolute; bottom:0; left: 0">
+    <div class="col-md-8 col-lg-6 col-xl-4 w-50 border" style="width:0; position: absolute; bottom:0; left: 0">
 
         <div class="card overflow-auto">
 
@@ -252,7 +259,7 @@
 
     <!-- <div class="row d-flex justify-content-center w-50" style="position: absolute; bottom:0; right: 0"> -->
 
-    <div class="col-sm-6 col-md-5 col-lg-5 col-xl-4 border" style="position: absolute; bottom:0; right: 0;">
+    <div class="col-sm-6 col-md-5 col-lg-5 col-xl-4 border chatpanel" id="chatbox" style="position: absolute; bottom:0; right: 0;">
 
         <div class="card overflow-auto">
 
@@ -268,55 +275,15 @@
 
                     <i class="fas fa-comments me-3 text-muted fa-xs"></i>
 
-                    <i class="fas fa-times text-muted fa-xs"></i>
+                    <i class="fas fa-times text-muted fa-xs" onclick="closeChat"></i>
 
                 </div>
 
             </div>
 
-            <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 30em">
+            <div class="card-body border" data-mdb-perfect-scrollbar="true" style="position: relative; height: 30em">
 
-                <div class="d-flex justify-content-between">
 
-                    <p class="small mb-1">Timona Siera</p>
-
-                    <p class="small mb-1 text-muted">23 Jan 2:00 pm</p>
-
-                </div>
-
-                <div class="d-flex flex-row justify-content-start">
-
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                    <div>
-
-                        <p class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">For what reason would it be advisable for me to think about business content?</p>
-
-                    </div>
-
-                </div>
-
-                <div class="d-flex justify-content-between">
-
-                    <p class="small mb-1 text-muted">23 Jan 2:05 pm</p>
-
-                    <p class="small mb-1">Johny Bullock</p>
-
-                </div>
-
-                <div class="d-flex flex-row justify-content-end mb-4 pt-1">
-
-                    <div>
-
-                        <p class="small p-2 me-3 mb-3 text-white rounded-3" style="background-color: #008080;">Thank you for your believe in our supports
-
-                        </p>
-
-                    </div>
-
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                </div>
                 <div class="d-flex flex-row justify-content-start  mt-2">
 
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
@@ -343,7 +310,7 @@
                             <p class="mb-1">You could believe whatever in the world you want for all I care. Anyways, thank you for your believe in our supports
 
                             </p>
-                            <p class="small mb-1 text-muted text-end">23 Jan 2:00 pm</p>
+                            <p class="small mb-1 text-end" style="color:#aeb1b0">23 Jan 2:00 pm</p>
                         </div>
 
 
@@ -381,7 +348,7 @@
                             <p class="mb-1">Thank you for your believe in our supports
 
                             </p>
-                            <p class="small mb-1 text-muted text-end">23 Jan 2:00 pm</p>
+                            <p class="small mb-1 text-end" style="color:#aeb1b0">23 Jan 2:00 pm</p>
                         </div>
 
 
@@ -390,7 +357,7 @@
 
                 </div>
 
-                <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3" style="background-color: #f5f6f7; position:sticky; bottom:0; z-index: 2;">
+                <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3 border" style="background-color: #f5f6f7; position:sticky; bottom:0; z-index: 2;">
 
                     <div class="input-group mb-0">
 
@@ -415,7 +382,21 @@
     <!-- </div> -->
 
 
+    <script>
+        const chatBox = document.getElementById('chatbox');
+        const button = document.getElementById('togglechat');
 
+        function myFunc() {
+            console.log("clicked");
+            // chatBox.classList.toggle('chatpanel');
+            chatBox.style.height = "500px";
+        }
+
+        function closeChat() {
+            console.log("Close chat");
+            chatBox.style.height = "0px";
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
