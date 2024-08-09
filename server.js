@@ -19,7 +19,8 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const port = process.env.PORT || 5000;
+const port = 5000;
+//process.env.PORT || 5000;
 
 // Set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -67,11 +68,19 @@ app.use('/', router);
 
 dbClient;
 
-io.on('connection', (socket) => {
+/**io.on('connection', (socket) => {
     console.log('A user connected');
     socket.on('disconnect', function() {
         console.log('Client disconnected.');
     });
+});
+*/
+io.on('connection', (socket) => {
+  console.log("A user connected");
+  socket.on('chat message', (data) => {
+    console.log(data);
+    io.emit('chat message', data);
+  });
 });
 
 server.listen(port, () => {

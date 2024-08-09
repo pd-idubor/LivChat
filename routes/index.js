@@ -14,10 +14,15 @@ const router = express.Router();
 router.get('/', function(req, res) {
     res.render('pages/index');
 });
-
+router.get('/chater', function(req, res){
+  const user = req.user;
+  console.log(user, ": User from the chater function");
+  res.render('pages/chater');
+});
 
 router.get('/dashboard/:username', [verifyToken, UsersController.getUser], async(req, res) => {
     const user = req.user;
+    req.session.currentUser = req.user;
     const result = await FollowsController.dashContent(req.userId);
     console.log('User dashboard requested');
     res.render('pages/dashboard', {
@@ -92,6 +97,19 @@ router.get('/signout', UsersController.signOut, function(req, res) {
     res.redirect('/');
 });
 
+
+router.get('/username', function(req, res) {
+  const user = req.user;
+  console.log(user, " from getusername api");
+  return user.username;
+});
+
+router.get('/chat', function(req, res) {
+  console.log("Chat ali active");
+  const user = req.session.currentUser;
+  //console.log("User from the chat api: ", user);
+  res.render('pages/chat', { currentUser: user.username });
+});
 
 // --------------Posts routes-------------------
 router.get('/posts', [verifyToken, PostsController.allPosts], function(req, res) {
