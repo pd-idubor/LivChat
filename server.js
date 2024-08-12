@@ -75,12 +75,28 @@ dbClient;
     });
 });
 */
+let userCount = 0;
 io.on('connection', (socket) => {
-  console.log("A user connected");
-  socket.on('chat message', (data) => {
-    console.log(data);
-    io.emit('chat message', data);
-  });
+    userCount++;
+    console.log("A user connected");
+
+    io.emit('stats', { userCount: userCount });
+    console.log('Connected clients:', userCount);
+
+    socket.on('disconnect', function() {
+        userCount--;
+        io.emit('stats', { userCount: userCount });
+        console.log('Connected clients:', userCount);
+    });
+
+    socket.on('typing', function(data) {
+        socket.broadcast.emit('typing', data);
+    });
+
+    socket.on('chat message', (data) => {
+        console.log(data);
+        io.emit('chat message', data);
+    });
 });
 
 server.listen(port, () => {

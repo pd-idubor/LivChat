@@ -14,17 +14,16 @@ const router = express.Router();
 router.get('/', function(req, res) {
     res.render('pages/index');
 });
-router.get('/chater', function(req, res){
-  const user = req.user;
-  console.log(user, ": User from the chater function");
-  res.render('pages/chater');
-});
 
 router.get('/dashboard/:username', [verifyToken, UsersController.getUser], async(req, res) => {
     const user = req.user;
-    req.session.currentUser = req.user;
+    req.session.currentUser = { username: user.username, image: user.image };
+    console.log(req.session.currentUser);
+    console.log("req.session image: ", req.session.currentUser.image);
+
     const result = await FollowsController.dashContent(req.userId);
     console.log('User dashboard requested');
+    console.log("Dashboard image: ", user.image);
     res.render('pages/dashboard', {
         posts: result,
         user: user
@@ -98,17 +97,15 @@ router.get('/signout', UsersController.signOut, function(req, res) {
 });
 
 
-router.get('/username', function(req, res) {
-  const user = req.user;
-  console.log(user, " from getusername api");
-  return user.username;
-});
 
 router.get('/chat', function(req, res) {
-  console.log("Chat ali active");
-  const user = req.session.currentUser;
-  //console.log("User from the chat api: ", user);
-  res.render('pages/chat', { currentUser: user.username });
+    if (!req.session.currentUser) return;
+    console.log("Chat ali active");
+    const user = req.session.currentUser;
+    console.log("User name from the chat api: ", user.username);
+    console.log("User image from chat api: ", user.image);
+    console.log("Req session image: ", req.session.currentUser.image);
+    res.send({ username: user.username, image: user.image });
 });
 
 // --------------Posts routes-------------------

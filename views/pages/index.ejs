@@ -12,7 +12,7 @@
                     <a href="#" class="nav-item nav-link"><i class="fas fa-envelope mx-1"></i> Contact</a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                    <form class="d-flex" action="/signin" method="post" id="signin-form">
+                    <form class="d-flex" action="/signin" method="post" id="signin-form" onfocusout="event.target.value = event.target.value.trim();">
                         <input class="form-control me-2" type="text" placeholder="Username" name='username' id="inputUsername">
                         <input class="form-control me-2" type="password" placeholder="Password" name='password' id=inputPassword>
                         <button class="btn btn-primary" type="submit">Login</button>
@@ -33,7 +33,7 @@
                         <p> Get connected today!</p>
                     </div>
                     <div class="col-md-5 my-4">
-                        <form class="py-3" id="signup-form" action="/signup" method="POST">
+                        <form class="py-3" id="signup-form" action="/signup" method="POST" onfocusout="event.target.value = event.target.value.trim();">
                             <div class="mb-3 form-group">
                                 <label class="form-label" for="newUsername">Username</label>
                                 <input type="username" name="username" class="form-control" id="newUsername" placeholder="adam1000">

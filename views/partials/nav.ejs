@@ -14,18 +14,6 @@
                 <div class="navbar-nav ms-auto">
 
                     <!-- Search panel -->
-                    <!-- <div class="dropdown">
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"><i class="fas fa-magnifying-glass"></i></button>
-                        <div id="search-container" class="dropdown-menu">
-                            <input class="dropdown-item" type="search" id="search-bar" placeholder="Search posts..." />
-                            <div class="dropdown-item" id="results-container">
-                            </div>
-                            <div class="dropdown-item d-none" id="unavailTxt"></div>
-                        </div>
-                    </div> -->
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#liveSearch">
-                        <i class="fas fa-magnifying-glass"></i>
-                    </button>
                     <div class="modal fade" id="liveSearch" tabindex="-1" aria-labelledby="liveSearch" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -55,11 +43,23 @@
                     <!-- End Search Modal -->
 
                     <ul class="navbar-nav d-flex flex-row me-2">
-                        <li class="nav-item me-3 me-lg-0">
+                        <!-- <li class="nav-item me-3 me-lg-0">
                             <a class="nav-link text-white me-1" id="chat" href="/chat"><i class="far fa-comments"></i></a>
+                        </li> -->
+                        <li class="nav-item me-1 me-lg-0">
+                            <a type="button" class="nav-link text-white px-2 btn btn-dark" data-bs-toggle="modal" data-bs-target="#liveSearch">
+                                <i class="fas fa-magnifying-glass"></i>
+                            </a>
                         </li>
                         <li class="nav-item me-3 me-lg-0">
-                            <a class="nav-link text-white" id="profile" href="/profile"><i class="fas fa-user mx-1"></i></a>
+                            <a type="button" class="nav-link text-white px-2 btn btn-dark" data-bs-toggle="collapse" data-bs-target="#chatbox">
+                                <i class="far fa-comments"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item me-3 me-lg-0">
+                            <a type="button" class="nav-link text-white px-2 btn btn-dark" id="profile" href="/profile"><i class="fas fa-user mx-1">
+                            </i>
+                        </a>
                         </li>
                     </ul>
                     <div class="d-flex align-items-center">
