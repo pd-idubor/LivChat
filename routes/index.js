@@ -50,16 +50,16 @@ router.get('/profile/', [verifyToken, UsersController.getUser, PostsController.g
     })
 });
 
-// router.get('/folprofile/:foluser', [verifyToken], async(req, res) => {
-//     const follow = await FollowsController.getFolProfile(req.params.foluser);
-//     console.log('Route:', follow);
-//     return;
-//     //}
-// });
+router.get('/fellowid/:username', async(req, res) => {
+    console.log(req.params.username);
+    const id = await FollowsController.getId(req.params.username);
+    console.log('Route:', id);
+    res.redirect(`/folprofile/${id}`);
+});
 router.get('/folprofile/:id', [verifyToken, UsersController.getUser, FollowsController.getFellow, FollowsController.getFellowPosts], async(req, res) => {
     console.log(`A fellow's profile was requested with id: ${req.params.id}`);
     let followers = await FollowsController.getFollowers(req.params.id);
-    // console.log("Request params: ", req.params);
+    req.session.currentFellow = req.fellow;
     let following = await FollowsController.getFollowing(req.params.id);
     if (followers === undefined) followers = [];
     if (following === undefined) following = [];
@@ -139,20 +139,18 @@ router.get('/post/delete/:id', [verifyToken, PostsController.deletePost], functi
 
 router.get('/post/:id', [verifyToken], async function(req, res) {
     const post = await PostsController.getPost(req.params.id);
-    res.render('pages/single_post', { post: post });
+    const user = req.session.currentUser.username;
+    let fellow;
+    if (user !== post.user) fellow = post.user;
+    res.render('pages/single_post', { fellow: fellow, post: post });
 });
 
 
 
 // -------------Follow routes-------------------
-router.post('/follow/:username', [verifyToken], FollowsController.followAction, function(req, res) {
+router.post('/follow', [verifyToken], FollowsController.followAction, function(req, res) {
     console.log("The followAction function of FollowsController was called!!!");
 });
-
-router.post('/chat/id', [verifyToken], function(req, res) {
-    console.log("The chat section was required");
-});
-
 
 router.all('*', (req, res) => {
     res.render('pages/404');

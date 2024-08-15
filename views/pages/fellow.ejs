@@ -14,15 +14,17 @@
                         <%= fellow.username.toUpperCase() %>
                     </h4>
                     <% if(user._id && fellow._id) { %>
-                        <% const following = user.following;
-						let follow, unfollow;
-                          const action = following.includes(fellow._id) ? unfollow : follow;
+                        <% let following = user.following;
+                        let action = following.includes(fellow._id) ? "unfollow" : "follow";
                         %>
-                            <% if (action === unfollow) { %>
-                                <button class="btn btn-primary ml-4" data-action="<%= action %>" data-follower="<%= user._id %>" data-following="<%= user._id %>" id="follow-btn">Unfollow<i id="unfol-icon" class="fas fa-user-large-slash d-none"></i></button>
+
+                            <% if (action === "unfollow") { %>
+                                <button class="btn btn-danger" id="folButton" data-follow="<%=user._id%>;<%=fellow._id%>;<%=action%>"><i class='fas fa-user-large-slash'></i> Unfollow</button>
+
 
                                 <% }else {%>
-                                    <button class="active btn btn-success text-white" id="follow">Follow <i id="fol-icon" class="fas fa-user-check"></i></i></button>
+                                    <button class="btn btn-success" id="folButton" data-follow="<%=user._id%>;<%=fellow._id%>;<%=action%>"><i class='fas fa-user-check'></i> Follow</button>
+
                                     <%}%>
                                         <%}%>
 
@@ -81,7 +83,8 @@
 
                     <div class="tab-pane border px-3 pt-3" id="followers" role="tabpanel">
                         <% if(followers.length === 0) { %>
-                            <p>You are not being followed yet </p>
+                            <p>
+                                <%=fellow.username%> has no followers.</p>
                             <% } %>
 
                                 <% if(followers.length > 0) {
@@ -109,7 +112,8 @@
 
                     <div class="tab-pane border px-3 pt-3" id="following" role="tabpanel">
                         <% if(following.length === 0) { %>
-                            <p>You are not following any users </p>
+                            <p>
+                                <%=fellow.username%> isn't following any users </p>
                             <% } %>
 
                                 <% if(following.length > 0) {

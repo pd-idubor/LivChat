@@ -17,6 +17,7 @@ class FollowsController {
         }
         console.log('Follower id:', typeof(follower), follower);
         console.log('Following id:', typeof(following), following);
+        console.log("Action: ", action);
         try {
             switch (action) {
                 case 'follow':
@@ -24,12 +25,14 @@ class FollowsController {
                         Users.findByIdAndUpdate(follower, { $push: { following: following } }),
                         Users.findByIdAndUpdate(following, { $push: { followers: follower } })
                     ]);
+                    console.log("Followed");
                     break;
                 case 'unfollow':
                     await Promise.all([
                         Users.findByIdAndUpdate(follower, { $pull: { following: following } }),
                         Users.findByIdAndUpdate(following, { $pull: { followers: follower } })
                     ]);
+                    console.log("Unfollowed");
                     break;
                 default:
                     break;
@@ -123,21 +126,11 @@ class FollowsController {
         }
     }
 
-    static async getFolProfile(name) {
+    static async getId(name) {
         try {
-            const user = await Users.find({ 'username': name }).populate('posts');
-            const posts = user['posts'];
-            let postList = [];
-            console.log('Fol-user name:', user);
-            if (posts === undefined) return (console.log("This user has no posts"));
-            await posts.reduce(async(promise, post) => {
-                await promise;
-                if (follow !== null) {
-                    const data = await Posts.findById(post._id);
-                    postList.push(data);
-                }
-            }, Promise.resolve());
-            console.log(user, postList);
+            const fellow = await Users.findOne({ 'username': name });
+            console.log("Fellow id: ", fellow._id);
+            return (fellow._id);
         } catch (err) {
             console.log(err);
         }

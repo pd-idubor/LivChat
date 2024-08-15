@@ -5,21 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        #results-container a {
-            /* background-color: slategrey; */
-            text-decoration: none;
-        }
-        
-        .chatpanel {
-            /* display: none; */
-            /* height: 0; */
-            /* transition: 0.5s; */
-        }
-    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/css/bootstrap5-toggle.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -95,6 +83,10 @@
 
     <!-- onclick="myFunc()" -->
     <p class="text-center">Yellow</p>
+    <button class="btn btn-primary" id="folButton" data-fol="user._id;fellow._id;follow">Follow</button>
+    <input type="checkbox" id="folToggle" data-toggle="toggle" data-onvalue="user._id;fellow._id;follow" data-offvalue="user._id;fellow._id;unfollow" data-onlabel="Follow" data-offlabel="Unfollow" data-onstyle="success" data-offstyle="danger">
+
+
     <a type="button" class="btn btn-dark" id="togglechat" data-bs-toggle="collapse" data-bs-target="#chatbox">Chat box</a>
     <!-- Large modal -->
     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Large modal</button>
@@ -188,7 +180,7 @@
 
             </div>
 
-            <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 450px">
+            <div class="card-body" data-bs-spy="scroll" style="position: relative; height: 450px">
 
 
 
@@ -357,138 +349,13 @@
 
             </div>
 
-            <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 31em">
+            <div class="card-body border" data-mdb-perfect-scrollbar="true" style="position: relative; height: 31em">
 
                 <div id="messages">
-                    <div class="d-flex flex-row justify-content-start  mt-2">
 
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                        <div>
-
-                            <div class="small p-2 ms-2 mb-2 rounded-3" style="background-color: #f5f6f7;">
-                                <p class="small mb-1">Timona Siera</p>
-                                <p class="mb-1">For what reason would it be advisable for me to think about business content?
-                                </p>
-                                <p class="small mb-1 text-muted text-end">Jan 23, 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-
-                    </div>
-                    <div class="d-flex flex-row justify-content-end  mt-2">
-
-                        <div>
-
-                            <div class="small p-2 mx-2 mb-2 rounded-3 text-white" style="background-color: #008080;">
-                                <p class="small mb-1">Johny Bullock</p>
-                                <p class="mb-1">You could believe whatever in the world you want for all I care. Anyways, thank you for your believe in our supports
-
-                                </p>
-                                <p class="small mb-1 text-end" style="color:#aeb1b0">23 Jan 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-
-
-
-                    </div>
-                    <div class="d-flex flex-row justify-content-start  mt-2">
-
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                        <div>
-
-                            <div class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">
-                                <p class="small mb-1">Timona Siera</p>
-                                <p class="mb-1">For what reason would it be advisable for me to think about business content?
-                                </p>
-                                <p class="small mb-1 text-muted text-end">23 Jan 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-                    <div class="d-flex flex-row justify-content-start  mt-2">
-
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                        <div>
-
-                            <div class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">
-                                <p class="small mb-1">Timona Siera</p>
-                                <p class="mb-1">For what reason would it be advisable for me to think about business content?
-                                </p>
-                                <p class="small mb-1 text-muted text-end">23 Jan 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-                    <div class="d-flex flex-row justify-content-start  mt-2">
-
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                        <div>
-
-                            <div class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">
-                                <p class="small mb-1">Timona Siera</p>
-                                <p class="mb-1">For what reason would it be advisable for me to think about business content?
-                                </p>
-                                <p class="small mb-1 text-muted text-end">23 Jan 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-                    <div class="d-flex flex-row justify-content-start  mt-2">
-
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp" alt="avatar 1" style="width: 45px; height: 100%;">
-
-                        <div>
-
-                            <div class="small p-2 ms-3 mb-3 rounded-3" style="background-color: #f5f6f7;">
-                                <p class="small mb-1">Timona Siera</p>
-                                <p class="mb-1">For what reason would it be advisable for me to think about business content?
-                                </p>
-                                <p class="small mb-1 text-muted text-end">23 Jan 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-                    <div class="d-flex flex-row justify-content-end  mt-2">
-
-                        <div>
-
-                            <div class="small p-2 ms-3 mb-3 rounded-3 text-white" style="background-color: #008080;">
-                                <p class="small mb-1">Johny Bullock</p>
-                                <p class="mb-1">Thank you for your believe in our supports
-
-                                </p>
-                                <p class="small mb-1 text-end" style="color:#aeb1b0">23 Jan 2:00 pm</p>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
                 </div>
 
-                <div class="card-footer text-muted d-flex justify-content-start align-items-center border" style="background-color: #f5f6f7; position:sticky; bottom:0; z-index: 2;">
+                <div class="card-footer text-muted d-flex justify-content-start align-items-center border" style="background-color: #f5f6f7; position:absolute;width:93%; bottom:0; right:3%; z-index: 2;">
 
                     <div class="input-group mb-0">
 
@@ -511,21 +378,50 @@
 
     <!-- </div> -->
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/js/bootstrap5-toggle.ecmas.min.js"></script>
 
     <script>
-        // const chatBox = document.getElementById('chatbox');
-        // const button = document.getElementById('togglechat');
+        let status = document.getElementById("folToggle");
+        status.addEventListener("change", function(e) {
+            console.log("Toggle: " + "checked");
+            const value = this.value;
+            console.log("The value of this: ", value);
+            const [
+                user,
+                fellow,
+                action
+            ] = value.split(';');
+            if (action === "follow") {
+                // status.classList.remove("checked");
+            } else {
+                // status.classList.add("checked");
+            }
+            console.log(user, fellow, action);
+        });
 
-        // function myFunc() {
-        //     console.log("clicked");
-        //     // chatBox.classList.toggle('chatpanel');
-        //     chatBox.style.height = "500px";
-        // }
+        let state = document.getElementById("folButton");
+        state.addEventListener("click", function(e) {
+            console.log("Button: " + "clicked");
+            const value = e.target.dataset.fol;
+            console.log("The value of dataset: ", value);
+            const [
+                user,
+                fellow,
+                action
+            ] = value.split(';');
 
-        // function closeChat() {
-        //     console.log("Close chat");
-        //     chatBox.style.height = "0px";
-        // }
+            console.log("From the button click: ", user, fellow, action);
+            if (state.classList.contains("btn-primary")) {
+                state.classList.remove("btn-primary");
+                state.classList.add("btn-danger");
+                state.innerText = "Unfollow";
+            } else {
+                state.classList.remove("btn-danger");
+                state.classList.add("btn-primary");
+                state.innerText = "Follow";
+            }
+            // location.reload();
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
