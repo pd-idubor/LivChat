@@ -40,15 +40,9 @@
                                                         <div class="flex-grow-1 ms-3">
 
                                                             <h6>
-                                                                <%= post.user %>
-                                                            </h6>
-                                                            <p><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></p>
-                                                            <h6>
                                                                 <%= post.title %>
                                                             </h6>
-                                                            <p>
-                                                                <%= post.content %>
-                                                            </p>
+                                                            <p><small class="text-muted"><i> Posted by <%=post.user%> on <%= post.createdAt.toDateString() %></i></small></p>
                                                             <a href='/post/<%= post._id %>' class="btn btn-sm btn-primary">View Post</a>
 
                                                         </div>

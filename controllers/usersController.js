@@ -16,7 +16,7 @@ class UsersController {
         const { username, email, password } = req.body;
         if (!username) return res.status(400).json({ error: 'Missing username' });
         if (!email || !check.isEmail(email)) {
-            return res.status(400).json({ error: 'Please enter a valid email' });
+            return errFunction('Please enter a valid email');
         }
         if (!password || !check.isLength(password, { min: 6 })) {
             return res.status(400).json({ error: 'Please enter a valid password' });
@@ -24,6 +24,7 @@ class UsersController {
         console.log("Login credentials checked");
         next();
     }
+
 
     static checkSign(req, res, next) {
         const { username, password } = req.body;
@@ -36,7 +37,6 @@ class UsersController {
     }
 
     static async signUp(req, res, next) {
-        console.log("Signing up new user");
         const { username, email, password } = req.body;
         const user = new Users({
             username,
@@ -56,14 +56,13 @@ class UsersController {
             req.session.user = user;
             req.session.token = token;
 
-            console.log(req.session.token);
             req.flash('success', `Welcome ${username}`);
 
-            console.log("Welcome new user");
             next();
         } catch (err) {
-            res.json(err);
-            console.log(err);
+            req.flash('error', 'An error has occured.\nPlease try again.');
+	    console.log(err);
+	    return res.redirect('/');
         }
     }
 
@@ -71,14 +70,16 @@ class UsersController {
         await Users.findOne({
                 username: req.body.username,
             })
-            .then((user) => {
+            .then(async (user) => {
                 if (!user) {
-                    return res.status(404).json({ message: "User Not found." });
+                    req.flash('error', "User Not found.");
+		    return res.redirect('/');
                 }
 
-                const hash = bcrypt.compare(req.body.password, user.password);
-                if (!hash) {
-                    return res.status(401).json({ message: "Incorrect Password !" });
+                const hash = await bcrypt.compare(req.body.password, user.password);
+		if (!hash) {
+                    req.flash('error', 'Incorrect password');
+		    return res.redirect('/');
                 }
                 try {
                     const token = jwt.sign({ id: user.id },
@@ -95,11 +96,13 @@ class UsersController {
 
                     next();
                 } catch (err) {
-                    res.json(err);
+                    req.flash('error', 'Error signing in.\nPlease try again');
                     console.log(err);
+		    return res.redirect('/');
                 }
             }).catch((err) => {
-                return res.status(500).send({ message: err });
+                req.flash('error', 'Error signing in.\nPlease try again');
+		return res.redirect('/');
             });
     };
 
@@ -115,7 +118,7 @@ class UsersController {
     static async getUser(req, res, next) {
         try {
             let user = await Users.findById(req.userId).populate('posts', 'followers');
-            if (!user) console.log('No user');
+            if (!user) return console.log('No user');
             const image = await graVatar(user.email);
             const { url } = image;
             user.image = url;
@@ -124,7 +127,8 @@ class UsersController {
             next();
         } catch (e) {
             console.log(e);
-            return res.json("Error in retrieving user");
+            req.flash('error', 'Error in retrieving user');
+	    return;
         }
     }
 }
