@@ -8,9 +8,7 @@ export default async function graVatar(email) {
 
     /* Sends a GET request for a user's avatar */
     const response = fetch("https://www.gravatar.com/avatar/" + hash + ".jpg");
-    console.log("Got image: " + response);
     const { url } = response;
-    console.log(url);
     image = response;
     return image;
 

@@ -13,15 +13,6 @@
                     <h4 class="me-3">Icon
                         <%= user.username.toUpperCase() %>
                     </h4>
-                    <!--< if(user && user._id != currentUser._id) { %>
-                       < const following = user.following;
-                          const action = following.includes(currentUser._id) ? 'unfollow' : 'follow';
-                       %>
-                        <button class="btn btn-primary ml-4" data-action="<= action %>" data-follower="<= user._id %>" data-following="<= currentUser._id %>" id="follow-btn">Follow</button>
-                       <} %>
-			<button type="button" class="active btn btn-success text-white" id="follow">Follow <i id="fol-icon" class="fas fa-user-check"></i><i id="unfol-icon" class="fas fa-user-large-slash d-none"></i>
-			</button>
-		-->
                 </div>
                 <nav>
                     <!-- Nav tabs -->
@@ -57,16 +48,10 @@
                                                 <% }%>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <h5>
-                                                <%= post.user %>
-                                            </h5>
-                                            <p><small class="text-muted"><i> Posted on <%= post.createdAt.toDateString() %></i></small></p>
                                             <h6>
                                                 <%= post.title %>
                                             </h6>
-                                            <p>
-                                                <%= post.content %>
-                                            </p>
+                                            <p><small class="text-muted"><i> Posted by <%=post.user%> on <%= post.createdAt.toDateString() %></i></small></p>
                                             <a href='/post/<%= post._id %>' class="btn btn-sm btn-primary">View Post</a>
 
                                         </div>
@@ -84,7 +69,7 @@
 			  followers.forEach(follow => { %>
                                     <div class="d-flex border rounded-3 p-2 mb-2">
                                         <div class="flex-shrink-0">
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (31).webp" class="rounded-circle m-3" height="18" id="fol-id" alt="Portrait of a Woman" loading="lazy" />
+                                            <img src="<%=follow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <a href='/folprofile/<%= follow._id %>'>

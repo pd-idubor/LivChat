@@ -21,7 +21,8 @@ class PostsController {
                     Users.findOneAndUpdate({ _id: req.session.user._id }, { $push: { posts: post._id } }, { new: true, useFindAndModify: false })
                         .then(result => {
                             req.session.post_id = post._id;
-                            console.log({ created: true, postid: post._id });
+                            req.flash('success', 'New post created');
+			    console.log({ created: true, postid: post._id });
                             next();
                         });
                 });
@@ -48,11 +49,12 @@ class PostsController {
                 }, {
                     $set: { title: title, content: content }
                 }).then(result => {
-                    (console.log({ updated: true, postdata: postId }));
+                    (console.log({ updated: true, postdata: req.params.id }));
                 });
 
                 req.session.post_id = req.params.id;
-                console.log("Post updated");
+                req.flash('success', 'Post update successful');
+		console.log("Post updated");
                 next();
 
             } catch (err) {

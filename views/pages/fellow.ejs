@@ -4,7 +4,8 @@
 
         <div class="container-fluid">
             <div class="p-5 my-4 bg-light rounded-3">
-                <div class="d-flex align-items-center mb-2">
+                <%- include("../partials/flash.ejs"); -%>
+		<div class="d-flex align-items-center mb-2">
                     <a class="d-flex align-items-center me-3" href="#" id="userImg">
                         <% if(fellow.image) { %>
                             <img src="<%=fellow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
@@ -63,16 +64,10 @@
                                                 <% }%>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <h5>
-                                                <%= fellowPost.user %>
-                                            </h5>
-                                            <p><small class="text-muted"><i> Posted on <%= fellowPost.createdAt.toDateString() %></i></small></p>
                                             <h6>
-                                                <%= fellowPost.title %>
+                                                <%= fellowPost.title%>
                                             </h6>
-                                            <p>
-                                                <%= fellowPost.content %>
-                                            </p>
+                                            <p><small class="text-muted"><i> Posted by <%=fellowPost.user%> on <%= fellowPost.createdAt.toDateString() %></i></small></p>
                                             <a href='/post/<%= fellowPost._id %>' class="btn btn-sm btn-primary">View Post</a>
 
                                         </div>
