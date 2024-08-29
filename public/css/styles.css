@@ -1,3 +1,42 @@
+/* Chat panel */
+
+#chatbox {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    .card-header {
+        background-color: #f5f6f7;
+        border-top: 4px solid #008080;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        #count {
+            background-color: #008080;
+        }
+        #type {
+            font-size: x-small;
+            position: absolute;
+            left: 5%;
+            bottom: 0;
+            color: #008080;
+        }
+    }
+    .card-body {
+        height: 31em;
+        overflow: auto;
+    }
+    .card-footer {
+        background-color: #f5f6f7;
+        position: absolute;
+        width: 95%;
+        bottom: 0;
+        z-index: 2;
+    }
+}
+
+
+/* Post Card */
+
 #postCard {
     border: solid 2px teal;
 }
@@ -7,7 +46,7 @@
 }
 
 
-/*  */
+/* Search Results */
 
 #results-container div:hover {
     opacity: 80%;
