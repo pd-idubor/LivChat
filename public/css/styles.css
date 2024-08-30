@@ -1,3 +1,16 @@
+.overFlow {
+    text-overflow: ellipsis;
+}
+
+.a-card {
+    text-decoration: none;
+    color: black;
+     :hover {
+        background-color: #ffff;
+    }
+}
+
+
 /* Chat panel */
 
 #chatbox {
@@ -39,6 +52,18 @@
 
 #postCard {
     border: solid 2px teal;
+}
+
+#postEdit {
+    color: blue;
+}
+
+#postDelete {
+    color: red;
+}
+
+#redirect {
+    color: grey;
 }
 
 .title a {
