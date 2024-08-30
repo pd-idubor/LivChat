@@ -5,139 +5,140 @@
         <div class="container-fluid">
             <div class="p-5 my-4 bg-light rounded-3">
                 <%- include("../partials/flash.ejs"); -%>
-		<div class="d-flex align-items-center mb-2">
-                    <a class="d-flex align-items-center me-3" href="#" id="userImg">
-                        <% if(fellow.image) { %>
-                            <img src="<%=fellow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
-                            <% }%>
-                    </a>
-                    <h4 class="me-3">Icon
-                        <%= fellow.username.toUpperCase() %>
-                    </h4>
-                    <% if(user._id && fellow._id) { %>
-                        <% let following = user.following;
+                    <div class="d-flex align-items-center mb-2">
+                        <a class="d-flex align-items-center me-3" href="#" id="userImg">
+                            <% if(fellow.image) { %>
+                                <img src="<%=fellow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
+                                <% }%>
+                        </a>
+                        <h4 class="me-3 text-capitalize">
+                            <%= fellow.username %>
+                        </h4>
+                        <% if(user._id && fellow._id) { %>
+                            <% let following = user.following;
                         let action = following.includes(fellow._id) ? "unfollow" : "follow";
                         %>
 
-                            <% if (action === "unfollow") { %>
-                                <button class="btn btn-danger" id="folButton" data-follow="<%=user._id%>;<%=fellow._id%>;<%=action%>"><i class='fas fa-user-large-slash'></i> Unfollow</button>
+                                <% if (action === "unfollow") { %>
+                                    <button class="btn btn-danger" id="folButton" data-follow="<%=user._id%>;<%=fellow._id%>;<%=action%>"><i class='fas fa-user-large-slash'></i> Unfollow</button>
 
 
-                                <% }else {%>
-                                    <button class="btn btn-success" id="folButton" data-follow="<%=user._id%>;<%=fellow._id%>;<%=action%>"><i class='fas fa-user-check'></i> Follow</button>
+                                    <% }else {%>
+                                        <button class="btn btn-success" id="folButton" data-follow="<%=user._id%>;<%=fellow._id%>;<%=action%>"><i class='fas fa-user-check'></i> Follow</button>
 
-                                    <%}%>
                                         <%}%>
+                                            <%}%>
 
-                </div>
-                <nav>
-                    <!-- Nav tabs -->
+                    </div>
+                    <nav>
+                        <!-- Nav tabs -->
 
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab"> Posts: <%= fellowPosts.length %></button>
-                        </li>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="posts-tab" data-bs-toggle="tab" data-bs-target="#posts" type="button" role="tab"> Posts: <%= fellowPosts.length %></button>
+                            </li>
 
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="followers-tab" data-bs-toggle="tab" data-bs-target="#followers" type="button" role="tab">Followers: <%= followers.length %></button>
-                        </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="followers-tab" data-bs-toggle="tab" data-bs-target="#followers" type="button" role="tab">Followers: <%= followers.length %></button>
+                            </li>
 
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="following-tab" data-bs-toggle="tab" data-bs-target="#following" type="button" role="tab">Following: <%= following.length %></button>
-                        </li>
-                    </ul>
-                </nav>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="following-tab" data-bs-toggle="tab" data-bs-target="#following" type="button" role="tab">Following: <%= following.length %></button>
+                            </li>
+                        </ul>
+                    </nav>
 
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div class="tab-pane active border px-3 pt-3" id="posts" role="tabpanel">
-                        <% if (fellowPosts.length === 0) { %>
-                            <p> This user has no posts </p>
-                            <% } %>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active border px-3 pt-3" id="posts" role="tabpanel">
+                            <% if (fellowPosts.length === 0) { %>
+                                <p> This user has no posts </p>
+                                <% } %>
 
-                                <% if(fellowPosts.length > 0) {
+                                    <% if(fellowPosts.length > 0) {
 			  fellowPosts.forEach(fellowPost => {%>
-                                    <div class="d-flex border rounded-3 p-2 mb-2">
-                                        <div class="flex-shrink-0">
-                                            <% if(fellow.image) { %>
-                                                <img src="<%=fellow.image%>" class="rounded-circle m-3" height="30" alt="User's avatar" loading="lazy" />
-                                                <% }%>
-                                        </div>
-                                        <div class="flex-grow-1 ms-3">
-                                            <h6>
-                                                <%= fellowPost.title%>
-                                            </h6>
-                                            <p><small class="text-muted"><i> Posted by <%=fellowPost.user%> on <%= fellowPost.createdAt.toDateString() %></i></small></p>
-                                            <a href='/post/<%= fellowPost._id %>' class="btn btn-sm btn-primary">View Post</a>
+                                        <a href='/post/<%= fellowPost._id %>' class="a-card">
+                                            <div class="d-flex border-bottom rounded-3 p-2 mb-2">
+                                                <div class="flex-shrink-0">
+                                                    <% if(fellow.image) { %>
+                                                        <img src="<%=fellow.image%>" class="rounded-circle m-3" height="30" alt="User's avatar" loading="lazy" />
+                                                        <% }%>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6>
+                                                        <%= fellowPost.title%>
+                                                    </h6>
+                                                    <p><small class="text-muted"><i> Posted by <span class="text-capitalize"><%=fellowPost.user%></span> on <%= fellowPost.createdAt.toDateString() %></i></small></p>
 
-                                        </div>
-                                    </div>
-                                    <% });
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <% });
 			} %>
-                    </div>
+                        </div>
 
-                    <div class="tab-pane border px-3 pt-3" id="followers" role="tabpanel">
-                        <% if(followers.length === 0) { %>
-                            <p>
-                                <%=fellow.username%> has no followers.</p>
-                            <% } %>
+                        <div class="tab-pane border px-3 pt-3" id="followers" role="tabpanel">
+                            <% if(followers.length === 0) { %>
+                                <p>
+                                    <span class="text-capitalize"><%=fellowPost.user%></span> has no followers.</p>
+                                <% } %>
 
-                                <% if(followers.length > 0) {
+                                    <% if(followers.length > 0) {
 			  followers.forEach(follow => { %>
-                                    <div class="d-flex border rounded-3 p-2 mb-2">
-                                        <div class="flex-shrink-0">
-                                            <% if(fellow.image) { %>
-                                                <img src="<%=fellow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
-                                                <% }%>
-                                        </div>
-                                        <div class="flex-grow-1 ms-3">
-                                            <a href='/folprofile/<%= follow.username %>'>
-                                                <%= follow.username.toUpperCase() %>
-                                            </a>
-                                            <p>
-                                                <%= follow.about %>
-                                            </p>
-                                            <a href='/folprofile/<%= follow._id %>' class="btn btn-sm btn-primary">View Profile</a>
-
-                                        </div>
-                                    </div>
-                                    <% });
+                                        <a href='/folprofile/<%=follow._id%>' class="a-card">
+                                            <div class="d-flex border-bottom rounded-3 p-2 mb-2">
+                                                <div class="flex-shrink-0">
+                                                    <% if(fellow.image) { %>
+                                                        <img src="<%=fellow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
+                                                        <% }%>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="text-capitalize">
+                                                        <%= follow.username %>
+                                                    </h6>
+                                                    <p>
+                                                        <%= follow.about %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <% });
 			} %>
-                    </div>
+                        </div>
 
-                    <div class="tab-pane border px-3 pt-3" id="following" role="tabpanel">
-                        <% if(following.length === 0) { %>
-                            <p>
-                                <%=fellow.username%> isn't following any users </p>
-                            <% } %>
+                        <div class="tab-pane border-bottom px-3 pt-3" id="following" role="tabpanel">
+                            <% if(following.length === 0) { %>
+                                <p>
+                                    <span class="text-capitalize"><%=fellowPost.user%></span> isn't following any users </p>
+                                <% } %>
 
-                                <% if(following.length > 0) {
+                                    <% if(following.length > 0) {
 			  following.forEach(follow => {
 			%>
-                                    <div class="d-flex border rounded-3 p-2 mb-2">
-                                        <div class="flex-shrink-0">
-                                            <% if(follow.image) { %>
-                                                <img src="<%=follow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
-                                                <% }%>
-                                        </div>
-                                        <div class="flex-grow-1 ms-3">
-                                            <a href='/folprofile/<%=follow._id%>'>
-                                                <%= follow.username.toUpperCase() %>
-                                            </a>
-                                            <p>
-                                                <%= follow.about %>
-                                            </p>
-                                            <a href='/folprofile/<%=follow._id%>' class="btn btn-sm btn-primary">View Profile</a>
-
-                                        </div>
-                                    </div>
-                                    <% });
+                                        <a href='/folprofile/<%=follow._id%>' class="a-card">
+                                            <div class="d-flex border-bottom rounded-3 p-2 mb-2">
+                                                <div class="flex-shrink-0">
+                                                    <% if(follow.image) { %>
+                                                        <img src="<%=follow.image%>" class="rounded-circle" height="30" alt="User's avatar" loading="lazy" />
+                                                        <% }%>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="text-capitalize">
+                                                        <%= follow.username %>
+                                                    </h6>
+                                                    <p>
+                                                        <%= follow.about %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <% });
 			} %>
+                        </div>
                     </div>
-                </div>
 
 
-                <!-- End of container -->
+                    <!-- End of container -->
             </div>
 
             <%- include("../partials/footer.ejs"); %>
