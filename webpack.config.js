@@ -1,17 +1,19 @@
 import path from 'path';
-import webpack from 'webpack';
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(
     import.meta.url));
 
 
 export default {
-    entry: './frontend-js/search.js',
+    entry: [
+        './frontend-js/search.js',
+        './frontend-js/chat.js'
+    ],
     output: {
-        filename: 'search-bundled.js',
+        filename: 'main-bundled.js',
         path: path.resolve(__dirname, './public/js')
     },
-    mode: 'development',
+    mode: 'production',
     devtool: 'source-map',
     module: {
         rules: [{

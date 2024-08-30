@@ -1,6 +1,3 @@
-console.log("Live search file is loaded...");
-
-
 const searchBar = document.getElementById("search-bar");
 const resultsContainer = document.getElementById("results-container");
 const unavailTxt = document.getElementById("unavailTxt");
@@ -15,12 +12,7 @@ const fetchPosts = async() => {
         const response = await fetch('/posts', {
             method: 'GET',
         });
-        console.log("Response: ", response);
-
         postList = await response.json();
-
-        console.log("Type of Post list: ", typeof(postList));
-        console.log("Post list: ", postList);
 
         // Store posts data in browser storage
         /* localStorage.setItem("postdata", JSON.stringify(postList));
@@ -28,9 +20,9 @@ const fetchPosts = async() => {
 
     } catch (error) {
         unavailTxt.innerHTML =
-            "An error occurred while fetching posts. <br /> Please try again later.";
+            "An error occurred while fetching posts.<br/>Please try again later.";
         unavailTxt.style.display = "block";
-        console.error(error);
+        // console.error(error);
     }
 };
 
@@ -40,21 +32,14 @@ const renderPosts = (posts) => {
     unavailTxt.classList.add("d-none");
     postsSearchRes = [];
 
+    if (searchBar.value.length <= 1) return;
     posts.forEach((post) => {
-        console.log("Type of postid: ", typeof(post._id));
-        console.log("Post id: ", post._id);
         resultsContainer.innerHTML += `
-      <div class="search-card p-2 border-bottom bg-light">
-        <h5 class="title"><a href="/post/${post._id}">${post.title}</a></h5>
-        <p class="content">${post.content}</p>
+      <div class="search-card p-1 border-bottom bg-light">
+        <h6 class="title text-capitalize"><a href="/post/${post._id}">${post.title}</a></h6>
+        <p class="content overFlow">${post.content}</p>
       </div>
     `;
-        /*<div class="post-cards">
-                <h3 class="title">${post.title}</h3>
-                <p class="author">${post.user}</p>
-              </div>*/
-        // <p class="content">${post.content}</p>
-        // <p class="date">${post.createdAt}</p>
 
         postsSearchRes.push(post);
     });
@@ -78,7 +63,6 @@ if (!cacheTimestamp ||
 fetchPosts();
 searchBar.addEventListener("input", (event) => {
     searchValue = event.target.value.trim().toLowerCase();
-    console.log("Search value: ", searchValue);
 
     const filteredPosts = postList.filter((post) =>
         post.content.toLowerCase().includes(searchValue),
