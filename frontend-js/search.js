@@ -35,10 +35,12 @@ const renderPosts = (posts) => {
     if (searchBar.value.length <= 1) return;
     posts.forEach((post) => {
         resultsContainer.innerHTML += `
+        <a href="/post/${post._id}" class="a-card">
       <div class="search-card p-1 border-bottom bg-light">
-        <h6 class="title text-capitalize"><a href="/post/${post._id}">${post.title}</a></h6>
-        <p class="content overFlow">${post.content}</p>
+        <h6 class="title text-capitalize">${post.title}</h6>
+        <p class="content overFlow mb-0 text-muted">${post.content}</p>
       </div>
+      </a>
     `;
 
         postsSearchRes.push(post);

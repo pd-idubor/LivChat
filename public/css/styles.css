@@ -1,5 +1,8 @@
 .overFlow {
+    width: 300px;
+    overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .a-card {

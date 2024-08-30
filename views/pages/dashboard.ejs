@@ -40,12 +40,13 @@
                                                                 <% }%>
                                                         </div>
                                                         <div class="flex-grow-1 ms-3">
+                                                            <h6 class="m-0">
+                                                                <%= post.title %>
+                                                            </h6>
                                                             <% const formattedTime = `${post.createdAt.toLocaleString("en-US", {month: "short"})} ` + `${post.createdAt.toLocaleString("en-US", { day:"numeric", hour: "numeric", minute: "numeric" }).toLocaleLowerCase()}`%>
 
-                                                                <p><small class="text-muted"><i><span class="text-capitalize"><%=post.user%></span> posted on <%=formattedTime %></i></small></p>
-                                                                <h6 class="m-0">
-                                                                    <%= post.title %>
-                                                                </h6>
+                                                                <p><small class="text-muted mb-0"><i><span class="text-capitalize"><%=post.user%></span> posted on <%=formattedTime %></i></small></p>
+
                                                         </div>
                                                     </div>
                                                 </a>
